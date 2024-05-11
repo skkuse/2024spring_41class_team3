@@ -7,7 +7,7 @@ module.exports = {
     './app/**/*.{js,jsx}',
     './src/**/*.{js,jsx}',
   ],
-  prefix: "",
+  prefix: "tw-",
   theme: {
     container: {
       center: true,
