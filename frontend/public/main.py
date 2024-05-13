@@ -8,6 +8,9 @@ app = FastAPI()
 def home():
     return FileResponse("index.html")
 
+@app.get("/bulletin")
+def bulletin():
+    return '게시판'
 # input code (post)
 
 # before.java co2 => filtering 1, 2, 3 => time check, after.java co2 => db commit => return
