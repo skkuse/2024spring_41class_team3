@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Green Code</title>
-  <script>
-    function displayModifiedCode() {
-      var javaCode = document.getElementById("javaCodeInput").value;
-      var modifiedCode = modifyCode(javaCode);
-      document.getElementById("modifiedCodeOutput").innerText = modifiedCode;
-    }
-
-    function modifyCode(code) {
-      // Add your code modification logic here
-      // For example, you can replace all occurrences of "foo" with "bar"
-      var modifiedCode = code.replace(/foo/g, "bar");
-      return modifiedCode;
-    }
-  </script>
+    <title>Java Code Runner</title>
 </head>
 <body>
-  <h1>Java Code Editor</h1>
-  <textarea id="javaCodeInput" rows="10" cols="50"></textarea>
-  <br>
-  <button onclick="displayModifiedCode()">Display Modified Code</button>
-  <br>
-  <pre id="modifiedCodeOutput"></pre>
+    <textarea id="javaCode" rows="10" cols="50">public class Main { public static void main(String[] args) { System.out.println("Hello, world!"); } }</textarea>
+    <button onclick="runCode()">Run Code</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function runCode() {
+            const code = document.getElementById("javaCode").value;
+            const response = await fetch('/run', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({code: code})
+            });
+            const result = await response.json();
+            document.getElementById("output").innerText = result.result;
+        }
+    </script>
 </body>
 </html>
