@@ -5,7 +5,7 @@ import Header from './Header';
 const Layout = ({ children }) => (
 	<div>
 		<Header />
-		<div className="w-dvw h-dvh py-8 px-16">{children}</div>
+		<div className="flex h-dvh w-dvw justify-center px-16 py-8">{children}</div>
 	</div>
 );
 
