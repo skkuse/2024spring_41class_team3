@@ -1,0 +1,48 @@
+.container {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.box-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.box {
+  width: 30%;
+  height: auto;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: 2px solid #ccc;
+  border-right: none;
+  text-align: center;
+  font-size: 60px;
+  overflow: auto;
+}
+
+.box-head {
+  padding-top: 20px;
+  font-size: 20px;
+  color:gray;
+}
+
+.large-box {
+  width: 40%;
+  padding: 20px;
+  border: 2px solid #ccc;
+  text-align: center;
+  font-size: 24px;
+}
+.large-box img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+.num {
+  margin-top: 100px;
+}

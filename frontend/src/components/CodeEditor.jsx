@@ -8,7 +8,7 @@ export default function CodeEditor({ value, onChange, readOnly = false }) {
 				value={value}
 				onChange={onChange}
 				height="400px"
-				width="600px"
+				width="650px"
 				extensions={[java()]}
 				readOnly={readOnly}
 			/>
