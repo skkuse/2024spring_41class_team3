@@ -1,0 +1,47 @@
+.container {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.box-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.box {
+  width: 30%;
+  height: auto;
+  padding: 20px;
+  border: 2px solid #ccc;
+  text-align: center;
+  font-size: 72px;
+  white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 설정 */
+  overflow: hidden; /* 상자 내의 내용이 넘칠 경우 가려짐 */
+  text-overflow: ellipsis; /* 가려진 텍스트에 대해 생략 부호(...)를 표시 */
+}
+
+.box-head {
+  font-size: 12px;
+  color:gray;
+}
+
+.large-box {
+  width: 40%;
+  padding: 20px;
+  border: 2px solid #ccc;
+  text-align: center;
+  font-size: 24px;
+}
+.large-box img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+.num {
+  margin-top: 100px;
+}
