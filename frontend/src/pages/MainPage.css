@@ -19,9 +19,7 @@
   border: 2px solid #ccc;
   text-align: center;
   font-size: 72px;
-  white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 설정 */
-  overflow: hidden; /* 상자 내의 내용이 넘칠 경우 가려짐 */
-  text-overflow: ellipsis; /* 가려진 텍스트에 대해 생략 부호(...)를 표시 */
+  overflow: auto;
 }
 
 .box-head {
