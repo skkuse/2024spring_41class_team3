@@ -7,23 +7,26 @@
 
 .box-container {
   display: flex;
-  width: 100%;
   justify-content: space-between;
-  margin-bottom: 20px;
+  align-items: center;
+  width: 100%;
 }
 
 .box {
   width: 30%;
   height: auto;
-  padding: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
   border: 2px solid #ccc;
+  border-right: none;
   text-align: center;
-  font-size: 72px;
+  font-size: 60px;
   overflow: auto;
 }
 
 .box-head {
-  font-size: 12px;
+  padding-top: 20px;
+  font-size: 20px;
   color:gray;
 }
 
