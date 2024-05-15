@@ -17,7 +17,7 @@ export default function MainPage() {
 		<Layout>
 			<div>
 				<div className="flex flex-col gap-40">
-					<div className="flex h-96 justify-between gap-10">
+					<div className="flex h-96 flex-col justify-between gap-10 md:flex-row">
 						<div className="flex flex-col gap-3">
 							<h1>INPUT</h1>
 							<CodeEditor
