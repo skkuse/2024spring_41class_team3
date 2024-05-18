@@ -2,7 +2,20 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
+from db.database import *
+from db.models import *
+from db.schema import *
+from db.crud import *
+Base.metadata.create_all(bind=engine)
+
 app = FastAPI()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 # cover page
 @app.get("/")
