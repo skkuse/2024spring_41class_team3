@@ -10,6 +10,7 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+#fast api와 sqlalchemy를 연결하는 함수
 def get_db():
     db = SessionLocal()
     try:
