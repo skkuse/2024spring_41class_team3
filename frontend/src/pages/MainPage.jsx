@@ -1,14 +1,11 @@
 import Layout from '@/components/Layout';
 import CodeEditor from '@/components/CodeEditor';
+import Server_info from '@/components/Server_info';
+import World_ranking from '@/components/World_ranking';
+import Visualize_c from '@/components/Visualize_c';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import ShowerImage from '@/images/1_shower.png';
-import TrashImage from '@/images/2_trash.png';
-import AirconImage from '@/images/3_aircon.png';
-import SmartphoneImage from '@/images/4_smartphone.png';
-import CarImage from '@/images/5_car.png';
 import './MainPage.css';
-import { world } from '@/components/worlddata';
 
 export default function MainPage() {
 	const [inputCode, setInputCode] = useState(''); // input code
@@ -28,146 +25,6 @@ export default function MainPage() {
 		setOutputEmission((232.123123).toFixed(1));
 		setInputFlag(true);
 		//임시입니다. 실제로는 서버로 보낸 뒤 받은 코드를 띄워줘야 함
-	};
-
-	const Visualize_c = () => {
-		const emission = (inputEmission - outputEmission).toFixed(1);
-
-		var emissionStage = 0;
-
-		emissionStage =
-			emission <= 100
-				? 1
-				: emission <= 300
-					? 2
-					: emission <= 1000
-						? 3
-						: emission <= 2000
-							? 4
-							: 5;
-
-		const showerminute = ((emission * 15) / 86).toFixed(1);
-		const trashL = ((emission * 5) / 47).toFixed(1);
-		const airconminute = ((emission * 10) / 43).toFixed(1);
-		const phoneminute = ((emission * 4) / 67).toFixed(1);
-		const carkm = (emission / 210).toFixed(1);
-
-		const ctext =
-			emissionStage <= 1
-				? '= Shower ' + showerminute + ' minute(s)'
-				: emissionStage <= 2
-					? '= Waste ' + trashL + ' L'
-					: emissionStage <= 3
-						? '= Use Airconditioner ' + airconminute + ' minute(s)'
-						: emissionStage <= 4
-							? '= Use Smartphone ' + phoneminute + ' minute(s)'
-							: '= Drive car ' + carkm + ' km ';
-		var image =
-			emissionStage <= 1
-				? ShowerImage
-				: emissionStage <= 2
-					? TrashImage
-					: emissionStage <= 3
-						? AirconImage
-						: emissionStage <= 4
-							? SmartphoneImage
-							: CarImage;
-		if (inputflag) {
-			return (
-				<div className="flex flex-col items-center overflow-hidden">
-					<h2 className="pb-4 text-4xl font-bold tracking-tight">
-						Visualize Carbon Emission
-					</h2>
-					<div className="container">
-						<div className="box" id="left-box">
-							<div className="box-head">INPUT carbon emission (g)</div>
-							<div className="num">{inputEmission}</div>
-						</div>
-						<div className="box" id="right-box">
-							<div className="box-head">OUTPUT carbon emission (g)</div>
-							<div className="num">{outputEmission}</div>
-						</div>
-						<div className="large-box" id="large-box">
-							<b className="box-head">Effect</b> <br></br>
-							Carbon Emission <b>{emission}g</b> is saved. <br></br>
-							<b>{ctext}</b>
-							<img src={image} alt="Placeholder" />
-						</div>
-					</div>
-				</div>
-			);
-		} else
-			return (
-				<div>
-					<strong>Input your code and Be green!</strong>
-				</div>
-			);
-	};
-
-	const World_ranking = () => {
-		return (
-			<div className="mr-10 w-96">
-				<b>TOP Carbon Saving COUNTRY</b> / Carbon(g)
-				<ul role="list" className="divide-y divide-gray-200">
-					{world
-						.sort((obj1, obj2) => obj2.total_c - obj1.total_c)
-						.map((world) => (
-							<li
-								key={world.country}
-								className="flex justify-between gap-x-6 py-5"
-							>
-								<div className="flex min-w-0 gap-x-4">
-									<img
-										className="h-12 w-12 flex-none rounded-full bg-gray-50"
-										src={world.imageUrl}
-										alt=""
-									/>
-									<div className="min-w-0 flex-auto">
-										<p className="text-sm font-semibold leading-6 text-gray-900">
-											{world.country}
-										</p>
-									</div>
-								</div>
-								<div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-									<p className="text-sm leading-6 text-gray-900">
-										{world.total_c}
-									</p>
-								</div>
-							</li>
-						))}
-				</ul>
-			</div>
-		);
-	};
-
-	const Server_info = () => {
-		return (
-			<div className="w-96 pl-16">
-				<h3 className="text-base font-semibold leading-7 text-gray-900">
-					Server info.
-				</h3>
-				<div className="mt-6 border-t border-gray-100">
-					<dl className="divide-y divide-gray-200">
-						<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-							<dt className="text-sm font-medium leading-6 text-gray-900">
-								FastAPI
-							</dt>
-							<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-								Calculate Green-algorithm-based Carbon Emission Logic
-							</dd>
-						</div>
-						<div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-							<dt className="text-sm font-medium leading-6 text-gray-900">
-								...
-							</dt>
-							<dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-								...
-							</dd>
-						</div>
-					</dl>
-				</div>
-			</div>
-		);
 	};
 
 	return (
@@ -199,9 +56,12 @@ export default function MainPage() {
 						</div>
 					</div>
 					<div className="flex h-[800px] justify-between gap-5">
-						<Server_info></Server_info>
-						<Visualize_c></Visualize_c>
-						<World_ranking></World_ranking>
+						<Server_info/>
+						<Visualize_c
+							inputflag={inputflag}
+							inputEmission={inputEmission}
+							outputEmission={outputEmission} />
+						<World_ranking/>
 					</div>
 				</div>
 			</div>
