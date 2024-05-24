@@ -1,0 +1,22 @@
+
+g	java:S112^"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8‘¾©°è1
+u	java:S135&"YReduce the total number of break and continue statements in this loop to use at most one.( ¨Ô÷8¼§Ž°è1
+7
+java:S1220""Move this file to a named package.8½§Ž°è1
+e
+java:S2095"HUse try-with-resources or close this "FileReader" in a "finally" clause.(ÿÐ‹Û8œ©Ž°è1
+h
+java:S2095Y"LUse try-with-resources or close this "BufferedWriter" in a "finally" clause.(ª‚öR8šÀ©°è1
+j
+java:S2095X"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(ÚÃíÁýÿÿÿÿ8šÀ©°è1
+o
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(Çµí‘8›À©°è1
+Q
+java:S1481"/Remove this unused "isDetected" local variable.(¡Ãˆþÿÿÿÿ8©Ž°è1
+G	java:S1061"+Replace this use of System.out by a logger.(Òô®²8Ÿ©Ž°è1
+L	java:S106>"+Replace this use of System.out by a logger.(‚ŽáÐøÿÿÿÿ8 ©Ž°è1
+]	java:S125D"<This block of commented-out lines of code should be removed.(ÓŒÔ®øÿÿÿÿ8 ©Ž°è1
+F	java:S106S"+Replace this use of System.out by a logger.(¥Ì­!8“Ð’°è1
+L	java:S106f"+Replace this use of System.out by a logger.(¨¶ÑÍþÿÿÿÿ8ŸÀ©°è1
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8¡©Ž°è1
