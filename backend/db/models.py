@@ -1,5 +1,5 @@
 # 모델 정의
-from sqlalchemy import Column, Integer, String, Float, Date
+from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey
 from .database import Base
 
 class Code(Base):
