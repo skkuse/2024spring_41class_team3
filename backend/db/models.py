@@ -6,9 +6,16 @@ class Code(Base):
     __tablename__ = "code"
     
     code_id = Column(Integer, primary_key=True)
-    before = Column(String)
-    after = Column(String)
+    before_code = Column(String)
+    after_code = Column(String)
+    before_carbon = Column(Float)
+    after_carbon = Column(Float)
     github_id = Column(String, nullable=True)
+    date = Column(Date)
+    runtime = Column(Float)
+    memory = Column(Float)
+    energy_needed = Column(Float)
+    stdout = Column(String)
     country_id = Column(Integer, ForeignKey('country.country_id'))
 
 class Mapping(Base):
