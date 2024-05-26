@@ -7,7 +7,7 @@ public class Temp {
         for(int i = 0 ; i < 100000000; i++)
             arr.add("Hello");
         for(int i=0; i<arr.size(); i++) {
-             arr.get(i);
+            arr.get(i);
         }
     }
 }

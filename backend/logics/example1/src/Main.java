@@ -4,11 +4,10 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// arraylist객체의 사이즈를 반복문의 조건에서 불필요하게 계속 구하는 에너지낭비로직
 public class Main {
     public static void main(String[] args) {
-        String target_file = args[0];                    //알고리즘으로 탐지할 targetfile의 위치
-        String fixed_file = args[1];                    // 탐지 후 output할 file의 위치
+        String target_file = args[0];                   
+        String fixed_file = args[1];                    
         boolean isDetected = false;
         String buggyFilePath = target_file;
         String fixedFilePath = fixed_file;
@@ -24,18 +23,16 @@ public class Main {
 
             }
 
-            // 코드 분할
             String[] codes = content.toString().split("\n");
             ArrayList<String> lines = new ArrayList<>(Arrays.asList(codes));
 
-            // 검출
             int buggyLine = -1;
             String arrayListVariableName = "";
             int lineSize = lines.size();
 
             for(int i=0; i<lineSize; i++) {
                 String line = codes[i];
-                if(line.contains("public class")) {       //변경점 public class Buggy -> public class
+                if(line.contains("public class")) {      
                     classStartIndex = i;
                     continue;
                 }
@@ -52,8 +49,6 @@ public class Main {
 
                         Matcher sizeMethodMatcher = sizeMethodPattern.matcher(line2);
                         if (sizeMethodMatcher.find()) {
-//                            System.out.println("ArrayList 객체 변수명: " + arrayListVariableName);
-//                            System.out.println("해당 변수를 사용하여 size() 메서드를 호출함");
                             buggyLine = j;
                             isDetected = true;
                             break;
@@ -62,10 +57,9 @@ public class Main {
                 }
             }
 
-            // 수정
             if(isDetected) {
                 String bug_line = lines.get(buggyLine);
-                if( !bug_line.contains("for") && !bug_line.contains("while")){ // 변경점 .size()함수를 찾으면 무조건 변수화 하는것이 아니라, 반복문 내에서 호출될때 변경
+                if( !bug_line.contains("for") && !bug_line.contains("while")){
                     System.out.println("Not found");
                 }
                 else{
@@ -93,7 +87,7 @@ public class Main {
             lines.forEach(item -> {
                 try {
                     writer.write(item);
-                    writer.write("\n");             //변경점 이거 없으면 다 붙어서 나옴(Ubuntu 22.04 기준). 다만 os별로 확인 요망(윈도우에서는 잘 나옴)
+                    writer.write("\n"); 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

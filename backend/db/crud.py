@@ -6,12 +6,11 @@ from .schema import *
 def get_code(db: Session):
     return db.query(Code).all()
 
-def add_code(db: Session, item: CodeRequest):
-    db_item = Code(code_id=item.code_id)
-    db.add(db_item)
+def add_code(db: Session, item: Code):
+    db.add(item)
     db.commit()
-    db.refresh(db_item)
-    return db.query(Code).all()
+    db.refresh(item)
+    return item.code_id
 
 #country
 def get_country(db: Session):

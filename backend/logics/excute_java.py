@@ -3,52 +3,77 @@ import math
 import time
 import subprocess
 import time
-import pandas as pd
+import os
+# import pandas as pd
 
-current_location = "/home/ihmhyunsir/logics/"
-num_of_alg = 3 
+current_location = os.path.dirname(__file__)
+num_of_alg = 3
 
-def Str_to_file(code:str):
-    f = open("Temp"+".java","w")
+def File_to_str(file: str):
+    with open(os.path.join(current_location, file), 'r', encoding='utf-8') as file:
+        content = file.read()
+    return content
+
+def read_java_file(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+        return content
+    except FileNotFoundError:
+        return "File not found."
+    except Exception as e:
+        return f"An error occurred: {e}"
+
+def Str_to_file(code: str):
+    java_file_path = os.path.join(current_location, "Temp.java")
+    f = open(java_file_path, "w")
     f.write(code)
     f.close()
     return
 
 def modify_java_code():
-    target_file = current_location + "Temp.java"
-    fixed_file = current_location+"Fixed.java"
-    for i in range(1,num_of_alg+1):
-        location = "/home/ihmhyunsir/logics/example"+ str(i) + "/src/"
+    target_file = os.path.join(current_location, "Temp.java")
+    fixed_file = os.path.join(current_location, "Fixed.java")
+    
+    for i in range(1, num_of_alg + 1):
+        location = os.path.join(current_location, "example" + str(i), "src")
+        print(location)
         print("Detetction %d start" %i)
         subprocess.run("javac Main.java", shell=True, cwd=location)
-        subprocess.run("java Main "+ target_file +" "+ current_location+"Fixed.java", shell=True, cwd=location)
+        subprocess.run(["java", "-cp", location, "Main", target_file, fixed_file], capture_output=True, shell=True, cwd=location)
         print("Detection Done")
-        print("\n")
+        print()
         target_file = fixed_file
-    return
+        
+    return [], []
 
-def excute_java_code(path:str):
-    #compile
-    subprocess.run("javac "+path, shell=True, cwd=current_location) # cwd는 현재 디렉토리를 의미하는 걸로, cd라고 생각하시면 됩니다
-    # Measure time
+def excute_java_code(file: str):
+    compile_process = subprocess.run(["javac", file + ".java"], capture_output=True, shell=True, cwd=current_location)
+    
+    if compile_process.returncode != 0:
+        print("Java compilation failed:", compile_process.stderr.decode("utf-8"))
+        return [False, compile_process.stderr.decode("utf-8"), 0, 0]
+
     start = time.time()
-    subprocess.run("java Temp", shell=True, cwd=current_location) # 시간 측정
+    execute_process = subprocess.run(["java", "-cp", current_location, file], capture_output=True, shell=True, cwd=current_location)
     end = time.time()
-    return end - start
+    
+    if execute_process.returncode != 0:
+        print("Java execution failed:", execute_process.stderr.decode("utf-8"))
+        return [False, execute_process.stderr.decode("utf-8"), 0, 0]
 
-input_code = sys.argv[1]
+    # 실행 결과 출력
+    print("Java execution output:", execute_process.stdout.decode("utf-8"))
+    
+    return [True, execute_process.stdout.decode("utf-8"), (end - start), 0]
 
-print("input code : ",sys.argv[1])
+# Time_origin = excute_java_code(current_location+"Temp.java")
 
-Str_to_file(input_code)
+# modify_java_code()
 
-Time_origin = excute_java_code(current_location+"Temp.java")
+# Time_fixed = excute_java_code(current_location+"Fixed.java")
 
-modify_java_code()
-
-Time_fixed = excute_java_code(current_location+"Fixed.java")
-
-print("Time_origin %4f" %Time_origin)
-print("Time_fixed %4f" %Time_fixed)
+# print("Time_origin %4f" %Time_origin)
+# print("Time_fixed %4f" %Time_fixed)
 
 

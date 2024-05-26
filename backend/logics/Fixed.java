@@ -9,7 +9,7 @@ public class Fixed {
         int arrSize = arr.size();
 
         for(int i=0; i<arrSize; i++) {
-             arr.get(i);
+            arr.get(i);
         }
     }
 }

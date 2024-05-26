@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// 2중 또는 3중 중첩반복문을 통해 불필요한 연산수행하는 에너지낭비패턴
 public class Main {
     public static void main(String[] args) {
         boolean isDetected = false;
-        String target_file = args[0];                    //알고리즘으로 탐지할 targetfile의 위치
+        String target_file = args[0];                   
         String fixed_file = args[1];
         String buggyFilePath = target_file;
         String fixedFilePath = fixed_file;
@@ -36,17 +35,13 @@ public class Main {
 
             }
 
-            // 코드 분할
             String[] codes = content.toString().split("\n");
             ArrayList<String> lines = new ArrayList<>(Arrays.asList(codes));
 
-            // 검출
             int lineSize = lines.size();
 
-            // 중첩된 if 문 여부 플래그
             boolean nestedIfFound = false;
 
-            // 조건식 추출 정규식
             Pattern pattern = Pattern.compile("\\((.*?)\\)");
 
             for(int i=0; i<lineSize; i++) {
@@ -65,8 +60,6 @@ public class Main {
                         firstCondition = matcher1.group(1);
                     }
 
-
-                    // 현재 줄에 중첩된 if 문이 있는지 추가 검사 (3개 중첩인지 검사)
                     for (int j = i+1; j < lineSize; j++) {
                         String line2 = lines.get(j);
 
@@ -120,7 +113,6 @@ public class Main {
                         }
                         if(thirdEndIfIndex != 0) break;
                     }
-                    // 중첩된 if 문이 발견되면 반복문 종료
                     if (nestedIfFound) {
                         break;
                     }
@@ -128,26 +120,19 @@ public class Main {
             }
 
 
-            // 수정
             if (nestedIfFound) {
                 lines.set(classStartIndex, "public class Fixed {\n");
                 String conditionBody = "";
                 for(int i=thirdStartIfIndex+1; i<thirdEndIfIndex; i++) {
                     conditionBody = conditionBody + (lines.get(i) + "\n");
                 }
-//
-//
-//
-//
-                System.out.println("주어진 Java 파일에 중첩된 if 문이 있습니다." + firstStartIfIndex + ", " + firstEndIfIndex);
 
-//                int until = firstEndIfIndex - firstStartIfIndex;
+                System.out.println("The given Java file contains nested if statements." + firstStartIfIndex + ", " + firstEndIfIndex);
+
                 for(int i=firstStartIfIndex; i<=firstEndIfIndex; i++) {
                     lines.set(i, "##MUSTDELETE##");
                 }
-////
-////
-////
+
                 lines.set(firstStartIfIndex-1, "\t\tif((" + firstCondition + " && " + secondCondition + ") && " + thirdCondition + ") {\n");
                 lines.add(firstStartIfIndex, "\t\t\t" + conditionBody + "\n");
                 lines.add(firstStartIfIndex+1, "\t\t}\n");
@@ -158,7 +143,7 @@ public class Main {
                     System.out.println(i + " : " + lines.get(i));
                 }
             } else {
-                System.out.println("주어진 Java 파일에 중첩된 if 문이 없습니다.");
+                System.out.println("The given Java file does not contain nested if statements.");
             }
 
             reader.close();

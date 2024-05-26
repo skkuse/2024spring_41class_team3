@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// 반복문 내에서 불필요하게 중복적으로 객체선언하는 에너지낭비패턴
 public class Main {
     public static void main(String[] args) {
-        String target_file = args[0];                    //알고리즘으로 탐지할 targetfile의 위치
+        String target_file = args[0];                  
         String fixed_file = args[1];
         boolean isDetected = false;
         String buggyFilePath = target_file;
@@ -29,14 +28,11 @@ public class Main {
 
             }
 
-            // 코드 분할
             String[] codes = content.toString().split("\n");
             ArrayList<String> lines = new ArrayList<>(Arrays.asList(codes));
 
-            // 검출
             int lineSize = lines.size();
 
-            // find object creation
             for(int i=0; i<lineSize; i++) {
                 String line = codes[i];
                 if (line.contains("public class")) {
@@ -54,7 +50,6 @@ public class Main {
                 }
             }
 
-            // find for or while
             for(int i=0; i<lineSize; i++) {
                 String line = codes[i];
 
@@ -67,11 +62,6 @@ public class Main {
                 }
             }
 
-//            System.out.println(lines.get(objectCreationIndex));
-//            System.out.println(lines.get(loopCreationIndex));
-
-
-            // 수정
             if(objectCreationIndex != 0) {
                 lines.set(classStartIndex, "public class Fixed {\n");
                 String fixedContent = lines.get(objectCreationIndex);
@@ -86,7 +76,6 @@ public class Main {
                 }
 
                 reader.close();
-//
                 FileWriter fw = new FileWriter(fixedFilePath);
                 BufferedWriter writer = new BufferedWriter(fw);
                 lines.forEach(item -> {
