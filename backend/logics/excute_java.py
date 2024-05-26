@@ -14,16 +14,6 @@ def File_to_str(file: str):
         content = file.read()
     return content
 
-def read_java_file(file_path):
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            content = file.read()
-        return content
-    except FileNotFoundError:
-        return "File not found."
-    except Exception as e:
-        return f"An error occurred: {e}"
-
 def Str_to_file(code: str):
     java_file_path = os.path.join(current_location, "Temp.java")
     f = open(java_file_path, "w")
