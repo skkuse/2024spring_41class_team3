@@ -63,7 +63,7 @@ public class Main {
                     System.out.println("Not found");
                 }
                 else{
-                    System.out.println("Found");
+                    System.out.println("Algorithm 1 found Line "+buggyLine);
                     int count = countLeadingSpaces(lines.get(buggyLine));
                     lines.set(classStartIndex, "public class Fixed {");
                     lines.set(buggyLine, lines.get(buggyLine).replace(arrayListVariableName + ".size()", arrayListVariableName + "Size"));

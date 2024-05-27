@@ -121,13 +121,14 @@ public class Main {
 
 
             if (nestedIfFound) {
+                System.out.println("Algorithm 2 found Line "+ thirdStartIfIndex+1);
                 lines.set(classStartIndex, "public class Fixed {\n");
                 String conditionBody = "";
                 for(int i=thirdStartIfIndex+1; i<thirdEndIfIndex; i++) {
                     conditionBody = conditionBody + (lines.get(i) + "\n");
                 }
 
-                System.out.println("The given Java file contains nested if statements." + firstStartIfIndex + ", " + firstEndIfIndex);
+                //System.out.println("The given Java file contains nested if statements." + firstStartIfIndex + ", " + firstEndIfIndex);
 
                 for(int i=firstStartIfIndex; i<=firstEndIfIndex; i++) {
                     lines.set(i, "##MUSTDELETE##");
@@ -143,7 +144,7 @@ public class Main {
                     System.out.println(i + " : " + lines.get(i));
                 }
             } else {
-                System.out.println("The given Java file does not contain nested if statements.");
+                System.out.println("Not Found");
             }
 
             reader.close();

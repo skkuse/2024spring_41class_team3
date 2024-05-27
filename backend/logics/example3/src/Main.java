@@ -62,7 +62,8 @@ public class Main {
                 }
             }
 
-            if(objectCreationIndex != 0) {
+            if(objectCreationIndex != 0 && loopCreationIndex != 0) {
+                System.out.println("Algorithm 3 found Line "+ objectCreationIndex);
                 lines.set(classStartIndex, "public class Fixed {\n");
                 String fixedContent = lines.get(objectCreationIndex);
 
@@ -88,7 +89,9 @@ public class Main {
                 });
                 writer.close();
             }
-
+            else{
+                System.out.println("Not Found");
+            }
 
         } catch(Exception e) {
             System.out.println(e);
