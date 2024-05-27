@@ -1,5 +1,6 @@
 # 모델 정의
 from sqlalchemy import Column, Integer, String, Float, Boolean, Date, ForeignKey
+from sqlalchemy.orm import relationship
 from .database import Base
 
 class Code(Base):
@@ -18,6 +19,9 @@ class Code(Base):
     stdout = Column(String)
     sharing = Column(Boolean)
     country_id = Column(Integer, ForeignKey('country.country_id'))
+    
+    # 역참조
+    mappings = relationship("Mapping", back_populates="code")
 
 class Mapping(Base):
     __tablename__ = "mapping"
@@ -25,6 +29,9 @@ class Mapping(Base):
     mapping_id = Column(Integer, primary_key=True)
     code_id = Column(Integer, ForeignKey('code.code_id'))
     algorithm_id = Column(Integer)
+    
+    # 참조
+    code = relationship("Code", back_populates="mappings")
 
 class Country(Base):
     __tablename__ = "country"

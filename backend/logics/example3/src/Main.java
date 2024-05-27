@@ -56,7 +56,7 @@ public class Main {
                 Pattern forPattern = Pattern.compile("\\b(?:for|while)\\s*\\(.*?\\)\\s*\\{");
                 Matcher forMatcher = forPattern.matcher(line);
                 if (forMatcher.find()) {
-                    System.out.println("loop detected: " + line);
+                    // System.out.println("loop detected: " + line);
                     loopCreationIndex = i;
                     break;
                 }

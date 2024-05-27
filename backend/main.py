@@ -22,21 +22,19 @@ def get_db():
         db.close()
 
 @app.get("/")
-def read_root():
-    return {"Hello": "World"}
+def test(db: Session = Depends(get_db)):
+    return {"today": "hello"}
 
 """
 Response 200
 {
 "daily_visitor": integer,
 "total_visitor": integer,
-"daily_reduction": float,
 "total_reduction": float,
 "countries": [
     {
         "id": integer, 
         "name": string,
-        "daily_reduction": float,
         "total_reduction": float
     },
     ...
@@ -45,8 +43,19 @@ Response 200
 """
 @app.get("/api/default")
 def cover(db: Session = Depends(get_db)):
-    # visitor, country db조회
-    pass
+    total_visitor, daily_visitor = get_visitor(db, date.today())
+    total_reduction, countries = get_country(db)
+    response_countries = convert_country(countries)
+    
+    print(total_visitor, daily_visitor, total_reduction, countries)
+    print(response_countries)
+    return DefaultResponse(
+        daily_visitor=daily_visitor,
+        total_visitor=total_visitor,
+        total_reduction=total_reduction,
+        countries=response_countries
+    )
+    
 
 """
 1. /api/code -> post
@@ -81,75 +90,74 @@ Response 400 컴파일, 런타임 실패
 def code(request: CodeRequest, db: Session = Depends(get_db)):
     Str_to_file(request.code)
     result, stdout, runtime, memory = excute_java_code("Temp")
-    print(result, stdout, runtime, memory)
+    country = get_country_by_name(db, request.country)
     
+    # Temp 정상 작동
     if result:
         before_carbon, energy_needed = check_carbon(runtime, memory, request.country)
         algorithm_types, change_lines = modify_java_code()
         
-        # 변한게 없다? => 코드 db 저장, 바로 반환
+        code = Code(
+            runtime=runtime,
+            memory=memory,
+            before_code=request.code,
+            after_code=request.code,
+            before_carbon=before_carbon,
+            after_carbon=before_carbon,
+            github_id=None,
+            date=date.today(),
+            energy_needed=energy_needed,
+            stdout=stdout,
+            sharing=False,
+            country_id=country.country_id,
+        )
+        
+        # 국가 변화량도 포함,,,
+        response = CodeSuccessResponse(
+            code_id=-1,
+            runtime=runtime,
+            memory=memory,
+            before_code=request.code,
+            after_code=request.code,
+            before_carbon=before_carbon,
+            after_carbon=before_carbon,
+            energy_needed=energy_needed,
+            stdout=stdout,
+            algorithm_types=algorithm_types,
+            change_lines=change_lines,
+        )
+        
+        # Temp Fixed 변한게 없다 => 코드 db 저장, 바로 반환
         if not algorithm_types:
-            code = Code(
-                runtime=runtime,
-                memory=memory,
-                before_code=request.code,
-                after_code=request.code,
-                before_carbon=before_carbon,
-                after_carbon=before_carbon,
-                github_id=None,
-                date=date.today(),
-                energy_needed=energy_needed,
-                stdout=stdout,
-                sharing=False,
-                country_id=1, #수정필요
-            )
             code.code_id = add_code(db, code)
-            
-            return CodeSuccessResponse(
-                code_id=code.code_id,
-                runtime=runtime,
-                memory=memory,
-                before_code=request.code,
-                after_code=request.code,
-                before_carbon=before_carbon,
-                after_carbon=before_carbon,
-                energy_needed=energy_needed,
-                stdout=stdout,
-                algorithm_types=[],
-                change_lines=[],
-            )
+            response.code_id = code.code_id
+            return response
             
         # 변한게 있다 => 코드 db, 국가 db 차이 저장,
-        _, stdout, runtime, memory = excute_java_code("Fixed")
-        after_carbon = check_carbon(runtime, memory, request.country)
-        
-        
-    else:
+        print("runtime1: ", runtime)
+        result, stdout, runtime, memory = excute_java_code("Fixed")
+        print("runtime2: ", runtime)
+        if result:
+            code.after_carbon, code.energy_needed = check_carbon(runtime, memory, request.country)
+            code.after_code = File_to_str("Fixed")
+            
+            code.code_id = add_code(db, code)
+            
+            response.code_id = code.code_id
+            response.after_code = code.after_code
+            response.after_carbon = code.after_carbon
+            
+            # mapping 저장
+            add_mapping(db, code.code_id, algorithm_types)
+            # country 저장
+            update_country(db, country, (code.before_carbon - code.after_carbon))
+            
+            return response
+        else: # Fixed 에러
+            CodeErrorResponse(stderr=stdout)
+            
+    else: # Temp 에러
         return CodeErrorResponse(stderr=stdout)
-    """
-    code를 Temp.java로 변환 str_to_code()
-    
-    exec함수 => Temp.java 컴파일/런타임 성공이면 (True, stdout, runtime, memory)반환, stderr시 (False, stdout, 0, 0)반환
-    **stderr일 때 
-    에러모델 생성
-    에러메시지 바로 반환
-    
-    **stdout일 때
-    응답모델 생성
-    modify 함수 => temp.java =>> fixed.java, 반환 필요(algorithm_types, change_lines) ex) algorithm_types, change_lines = [1, 3], [22, 23, 24]
-    
-    **algorithm_types = [], change_lines = []일 경우
-    Temp.java 탄소배출량 함수(runtime, memory) => (반환 필요: before_carbon, after_carbon, energy_needed)
-    
-    **패턴 걸린 경우
-    exec함수 => Fixed.java 컴파일/런타임 성공이면 (True, runtime, memory)반환, stderr시 (False, 0, 0)반환
-    
-    Temp.java 탄소배출량 함수(runtime, memory) => (반환 필요: before_carbon, after_carbon, energy_needed)
-    Fixed.java 탄소배출량 함수(runtime, memory) => (반환 필요: before_carbon, after_carbon, energy_needed)
-    
-    carbon_emission(runtime, memory)
-
-    """
 
 """
 1. /api/sharing -> Post
@@ -165,10 +173,10 @@ Response
     "success": 200
 }
 """
-@app.get("/api/sharing")
-def sharing(db: Session = Depends(get_db)):
-    # code 조회
-    pass
+@app.post("/api/sharing")
+def sharing(request: SharingRequest, db: Session = Depends(get_db)):
+    sharing_code(db, request)
+    return {"success": 200}
 
 """
 Request
@@ -193,8 +201,8 @@ Response 200
 """
 @app.get("/api/bulletin/{algorithm_type}")
 def bulletin(algorithm_type: int, db: Session = Depends(get_db)):
-    # mapping -> code 조회
-    pass
+    mappings = [mapping.code for mapping in get_mapping(db, algorithm_type) if mapping.code.sharing]
+    return BulletinResponse(codes=convert_code(mappings))
 
 """
 Request
@@ -226,4 +234,18 @@ Response 200
 """
 @app.get("/api/detail/{code_id}")
 def detail(code_id: int, db: Session = Depends(get_db)):
-    pass
+    code = get_code_by_id(db, code_id)
+    if code:
+        return CodeResponse(id=code.code_id,
+                            runtime=code.runtime,
+                            memory=code.memory,
+                            before_code=code.before_code,
+                            after_code=code.after_code,
+                            before_carbon=code.before_carbon,
+                            after_carbon=code.after_carbon,
+                            github_id=code.github_id,
+                            date=code.date,
+                            energy_needed=code.energy_needed,
+                            stdout=code.stdout,
+                            sharing=code.sharing,
+                            country_id=code.country_id)
