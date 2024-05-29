@@ -114,7 +114,7 @@ def code(request: CodeRequest, db: Session = Depends(get_db)):
         
         # 국가 변화량도 포함,,,
         response = CodeSuccessResponse(
-            code_id=-1,
+            code_id=None,
             runtime=runtime,
             memory=memory,
             before_code=request.code,

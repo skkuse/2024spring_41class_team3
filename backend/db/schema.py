@@ -60,7 +60,7 @@ class CodeRequest(BaseModel):
     country: str
 
 class CodeSuccessResponse(BaseModel):
-    code_id: int
+    code_id: Optional[int]
     runtime: float
     memory: float
     before_code: str
