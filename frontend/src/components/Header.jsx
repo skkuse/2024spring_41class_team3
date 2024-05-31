@@ -32,7 +32,13 @@ export default function Header() {
 						style={{ width: '64px', height: '64px' }}
 					/>
 				</Button>
-				<p className="text-4xl font-semibold text-lime-800">GREEN CODING</p>
+				<p className="flex text-4xl font-semibold text-lime-700">
+					GREEN CO
+					<p className="relative mt-5 text-base font-semibold text-lime-700">
+						2
+					</p>
+					DING
+				</p>
 				<div className="flex rounded-full bg-lime-600/80 px-3.5 py-2 text-xl font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">
 					<Button
 						variant="ghost"

@@ -176,7 +176,7 @@ export default function MainPage() {
 				<div className="flex flex-col gap-40">
 					<div className="flex h-96 justify-between gap-10 px-20">
 						<div className="flex flex-col gap-3">
-							<h1>INPUT</h1>
+							<h1 className="text-xl font-bold text-lime-800">INPUT</h1>
 							<CodeEditor
 								value={inputCode}
 								onChange={(value) => setInputCode(value)}
@@ -193,7 +193,7 @@ export default function MainPage() {
 							</div>
 						</div>
 						<div className="flex flex-col gap-3">
-							<h1>OUTPUT</h1>
+							<h1 className="text-xl font-bold text-lime-800">OUTPUT</h1>
 							<CodeEditor value={outputCode} readOnly />
 							{/*output 실제로는 output 코드 떠야 합니다~~*/}
 						</div>
