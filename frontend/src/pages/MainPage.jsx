@@ -22,16 +22,10 @@ export default function MainPage() {
 		// submit 버튼 눌렀을 때 동작하는 함수
 		// inputCode를 서버로 보내고, 결과를 받아와서 outputCode에 저장하는 코드
 		axios
-			.post(
-				`${BASE_URL}/code`,
-				{
-					code: inputCode,
-					country: 'Korea', //TODO: FIX with dropdown
-				},
-				{
-					withCredentials: false,
-				},
-			)
+			.post(`${BASE_URL}/code`, {
+				code: inputCode,
+				country: 'Korea', //TODO: FIX with dropdown
+			})
 			.then((res) => {
 				setOutputCode(res.data.after_code);
 				setInputEmission(res.data.before_carbon.toFixed(1));
