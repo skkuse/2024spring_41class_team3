@@ -9,6 +9,9 @@ import SmartphoneImage from '@/images/4_smartphone.png';
 import CarImage from '@/images/5_car.png';
 import './MainPage.css';
 import { world } from '@/components/worlddata';
+import axios from 'axios';
+
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function MainPage() {
 	const [inputCode, setInputCode] = useState(''); // input code
@@ -21,12 +24,24 @@ export default function MainPage() {
 	const onSubmitButtonClick = () => {
 		// submit 버튼 눌렀을 때 동작하는 함수
 		// inputCode를 서버로 보내고, 결과를 받아와서 outputCode에 저장하는 코드
-		setInputEmission((312.23124).toFixed(1));
-
-		setOutputCode(inputCode);
+		axios
+			.post(
+				`${BASE_URL}/code`,
+				{
+					code: inputCode,
+					country: 'Korea', //TODO: FIX with dropdown
+				},
+				{
+					withCredentials: false,
+				},
+			)
+			.then((res) => {
+				setOutputCode(res.data.after_code);
+				setInputEmission(res.data.before_carbon.toFixed(1));
+				setOutputEmission(res.data.after_carbon.toFixed(1));
+			})
+			.finally(setInputFlag(true));
 		// 사용자 국가를 조사해 worlddata total_c에 추가
-		setOutputEmission((232.123123).toFixed(1));
-		setInputFlag(true);
 		//임시입니다. 실제로는 서버로 보낸 뒤 받은 코드를 띄워줘야 함
 	};
 
@@ -174,7 +189,7 @@ export default function MainPage() {
 		<Layout>
 			<div>
 				<div className="flex flex-col gap-40">
-					<div className="flex h-96 justify-between gap-10 px-20">
+					<div className="flex h-96 justify-center gap-10 px-20">
 						<div className="flex flex-col gap-3">
 							<h1 className="text-xl font-bold text-lime-800">INPUT</h1>
 							<CodeEditor
