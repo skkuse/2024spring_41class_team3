@@ -22,7 +22,7 @@ export function BulletinTable({ columns, data }) {
 		getCoreRowModel: getCoreRowModel(),
 	});
 	const onRowClick = (id) => {
-		navigate(`/detail/${id}`);
+		navigate(`/detail/${Number(id) + 1}`);
 	};
 
 	return (

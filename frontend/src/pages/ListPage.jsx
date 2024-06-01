@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { BulletinTable } from '@/components/BulletinTable';
 import { bulletinData } from '@/components/bulletindata';
 import { columns } from '@/components/Column';
+import axios from 'axios';
+
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function ListPage() {
 	const algorithms = [
@@ -22,6 +25,18 @@ export default function ListPage() {
 		'bg-purple-300',
 	];
 
+	const [data, setData] = useState([]);
+
+	const getData = (type) => {
+		axios.get(`${BASE_URL}/bulletin/${type}`).then((res) => {
+			setData(res.data.codes);
+		});
+	};
+
+	useEffect(() => {
+		getData(1);
+	}, []);
+
 	return (
 		<Layout>
 			<div className="w-[1000px]">
@@ -32,6 +47,7 @@ export default function ListPage() {
 								key={index}
 								value={algorithm}
 								className=" h-12 w-32 flex-col items-start  pr-3 text-gray-400 data-[state=active]:text-xl "
+								onClick={() => getData(index + 1)}
 							>
 								<div className="flex">
 									<div
@@ -54,7 +70,7 @@ export default function ListPage() {
 								className="bg-transparent"
 							>
 								{/*TODO: 실제 데이터로 바꾸기!! 지금은 목업임!!!*/}
-								<BulletinTable data={bulletinData} columns={columns} />
+								<BulletinTable data={data} columns={columns} />
 							</TabsContent>
 						))}
 					</div>
