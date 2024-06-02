@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/table';
 import { useNavigate } from 'react-router';
 
-export function BulletinTable({ columns, data }) {
+export function BulletinTable({ columns, data}) {
 	const navigate = useNavigate();
 	const table = useReactTable({
 		data,
@@ -22,7 +22,7 @@ export function BulletinTable({ columns, data }) {
 		getCoreRowModel: getCoreRowModel(),
 	});
 	const onRowClick = (id) => {
-		navigate(`/detail/${Number(id) + 1}`);
+		navigate(`/detail/${id}`);
 	};
 
 	return (
@@ -52,7 +52,7 @@ export function BulletinTable({ columns, data }) {
 							<TableRow
 								key={row.id}
 								data-state={row.getIsSelected() && 'selected'}
-								onClick={() => onRowClick(row.id)}
+								onClick={() => onRowClick(row.original.id)}
 								className="hover: cursor-pointer"
 							>
 								{row.getVisibleCells().map((cell) => (

@@ -46,6 +46,7 @@ const Visualize_c = ({inputflag, inputEmission, outputEmission}) => {
                     : emissionStage <= 4
                         ? SmartphoneImage
                         : CarImage;
+    
     if (inputflag) {
         return (
             <div className="flex flex-col items-center overflow-hidden">
