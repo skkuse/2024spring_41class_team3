@@ -3,9 +3,9 @@ import Layout from '@/components/Layout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { BulletinTable } from '@/components/BulletinTable';
-import { bulletinData } from '@/components/bulletindata';
 import { columns } from '@/components/Column';
 import axios from 'axios';
+import LoadingTable from '@/components/LoadingTable';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -26,10 +26,13 @@ export default function ListPage() {
 	];
 
 	const [data, setData] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	const getData = (type) => {
+		setIsLoading(true);
 		axios.get(`${BASE_URL}/bulletin/${type}`).then((res) => {
 			setData(res.data.codes);
+			setIsLoading(false);
 		});
 	};
 
@@ -69,8 +72,11 @@ export default function ListPage() {
 								value={algorithm}
 								className="bg-transparent"
 							>
-								{/*TODO: 실제 데이터로 바꾸기!! 지금은 목업임!!!*/}
-								<BulletinTable data={data} columns={columns} />
+								{isLoading ? (
+									<LoadingTable />
+								) : (
+									<BulletinTable data={data} columns={columns} />
+								)}
 							</TabsContent>
 						))}
 					</div>
