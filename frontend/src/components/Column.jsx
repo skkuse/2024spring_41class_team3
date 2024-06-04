@@ -1,3 +1,5 @@
+import { GithubCard } from './GithubCard';
+
 export const columns = [
 	{
 		accessorKey: 'id',
@@ -6,7 +8,12 @@ export const columns = [
 	{
 		accessorKey: 'github_id',
 		header: 'user name',
-		cell: ({ row }) => row.original.github_id ?? 'Anonymous',
+		cell: ({ row }) =>
+			row.original.github_id ? (
+				<GithubCard children={row.original.github_id} />
+			) : (
+				'Anonymous'
+			),
 	},
 	{
 		accessorKey: 'before_carbon',
