@@ -7,6 +7,7 @@ import { Toaster, toast } from 'sonner';
 import { useCopyToClipboard } from '@uidotdev/usehooks';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import UserSection from '@/components/UserSection';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -14,6 +15,7 @@ export default function DetailPages() {
 	const [copiedText, copyToClipboard] = useCopyToClipboard();
 	const [beforeCode, setBeforeCode] = useState('');
 	const [afterCode, setAfterCode] = useState('');
+	const [user, setUser] = useState('');
 	const handleInputCopy = () => {
 		copyToClipboard(beforeCode);
 		toast.success('Copied to clipboard!');
@@ -30,6 +32,7 @@ export default function DetailPages() {
 			.then((res) => {
 				setBeforeCode(res.data.before_code);
 				setAfterCode(res.data.after_code);
+				setUser(res.data.github_id);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -68,7 +71,7 @@ export default function DetailPages() {
 					<div>
 						<h2>감소량 시각화</h2>
 					</div>
-					<div>유저 정보</div>
+					<UserSection user={user} />
 				</div>
 			</div>
 		</Layout>
