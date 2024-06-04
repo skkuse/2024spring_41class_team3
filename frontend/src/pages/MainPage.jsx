@@ -32,7 +32,7 @@ export default function MainPage() {
 
     const onSubmitButtonClick = async () => {
         if(!inputCode.trim()){
-            Swal.fire('오류', '코드를 입력하세요.', 'error');
+            Swal.fire('ERROR', 'Input your code.', 'error');
             return;
         }
         
@@ -53,21 +53,21 @@ export default function MainPage() {
                 setOutputEmission(res.data.after_carbon.toFixed(1));
 
                 const { value: makePublic } = await Swal.fire({
-                    title: '게시판 공개',
-                    text: "코드를 공개하시겠습니까?",
+                    title: 'PUBLISH CODE IN BULLETIN',
+                    text: "Would you like to make your code public?",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: '네, 공개합니다!',
-                    cancelButtonText: '아니오, 비공개입니다'
+                    confirmButtonText: 'Yes, I do',
+                    cancelButtonText: 'No, It is private'
                 });
 
                 if (makePublic) {
                     const result = await Swal.fire({
-                        title: 'GitHub ID를 입력하세요',
+                        title: 'Input your GitHub ID',
                         input: 'text',
-                        inputPlaceholder: 'GitHub ID를 입력하세요',
+                        inputPlaceholder: 'Input your GitHub ID',
                         showCancelButton: true,
-                        cancelButtonText: '익명으로 올리겠습니다'
+                        cancelButtonText: 'Publish it anonymously'
                     });
 
                     const githubId = result.isConfirmed && result.value ? result.value : null;
@@ -76,7 +76,7 @@ export default function MainPage() {
                     if (githubId) {
                         const isValidGitHubId = await verifyGitHubUsername(githubId);
                         if (!isValidGitHubId) {
-                            await Swal.fire('오류', '유효한 GitHub ID가 아닙니다.', 'error');
+                            await Swal.fire('ERROR', 'Invalid GitHub ID', 'error');
                             setLoading(false);
                             return;
                         }
@@ -88,18 +88,18 @@ export default function MainPage() {
                         github_id: githubId,
                     }).then((response) => {
                         if (response.data.success === 200) {
-                            Swal.fire('성공', '코드가 성공적으로 게시되었습니다.', 'success');
+                            Swal.fire('SUCCESS', 'Your code has been published successfully.', 'success');
                         } else {
-                            Swal.fire('오류', '코드 게시 중 문제가 발생했습니다.', 'error');
+                            Swal.fire('ERROR', 'There was a problem publishing your code.', 'error');
                         }
                     }).catch((error) => {
                         console.error(error);
-                        Swal.fire('오류', '코드 게시 중 문제가 발생했습니다.', 'error');
+                        Swal.fire('ERROR', 'There was a problem publishing your code.', 'error');
                     });
                 }
             }).catch((error) => {
                 console.error(error);
-                Swal.fire('오류', '코드 제출 중 문제가 발생했습니다.', 'error');
+                Swal.fire('ERROR', 'There was a problem submitting your code.', 'error');
             })
             .finally(() => {
 				setInputFlag(true);
