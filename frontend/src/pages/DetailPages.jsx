@@ -25,7 +25,7 @@ export default function DetailPages() {
 		toast.success('Copied to clipboard!');
 	};
 	const { id } = useParams();
-
+	
 	useEffect(() => {
 		axios
 			.get(`${BASE_URL}/detail/${id}`)
