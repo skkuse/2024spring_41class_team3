@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Java Code Runner</title>
+</head>
+<body>
+    <textarea id="javaCode" rows="10" cols="50">public class Main { public static void main(String[] args) { System.out.println("Hello, world!"); } }</textarea>
+    <button onclick="runCode()">Run Code</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function runCode() {
+            const code = document.getElementById("javaCode").value;
+            const response = await fetch('/run', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({code: code})
+            });
+            const result = await response.json();
+            document.getElementById("output").innerText = result.result;
+        }
+    </script>
+</body>
+</html>
