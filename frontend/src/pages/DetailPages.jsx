@@ -67,7 +67,7 @@ export default function DetailPages() {
 						<CodeEditor value={afterCode} readOnly />
 					</div>
 				</div>
-				<div className="flex items-center justify-between">
+				<div className="mb-10 flex items-center justify-between">
 					<UserSection user={user} />
 					<DetailTable data={data} />
 				</div>
