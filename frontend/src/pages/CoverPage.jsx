@@ -8,23 +8,44 @@ import '@shinyongjun/react-fullpage/css';
 import Typewriter from 'typewriter-effect';
 import './CoverPage.css';
 import CountUp from 'react-countup';
-import { world } from '@/components/worlddata';
+import { countryFlag } from '@/components/countryFlag';
+import axios from 'axios';
+
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function CoverPage() {
+	const [totalCode, setTotalCode] = useState(0);
+	const [totalCO2, setTotalCO2] = useState(0);
 	const [activeIndex, setActiveIndex] = useState(0);
+	const [world, setWorld] = useState([]);
 	const navigate = useNavigate();
 
-	// 현재 섹션 인덱스를 감지하고, 마지막 섹션으로 스크롤한 경우 MainPage로 이동합니다.
+	// 마지막 섹션으로 스크롤 시 Main page로 이동
 	useEffect(() => {
 		if (activeIndex === 2) {
 			setTimeout(() => {
-				// 지정된 시간(예: 1000ms 후)이 지난 후에 페이지 이동을 수행합니다.
 				navigate('/');
-			}, 500); // 1000ms (1초)의 딜레이 설정
-			// 마지막 섹션의 인덱스
-			//window.scrollTo(0, 0);
+			}, 400);
 		}
 	}, [activeIndex, navigate]);
+
+	// 첫번째 섹션의 Total Users, Total CO2 Reduction 데이터 fetch
+	useEffect(() => {
+		axios
+			.get(`${BASE_URL}/default`)
+			.then((response) => {
+				if (response.status === 200) {
+					setTotalCode(response.data.total_visitor);
+					setTotalCO2(response.data.total_reduction);
+					setWorld(response.data['countries']);
+				} else {
+					console.error('cannot fetch data');
+				}
+			})
+			.catch((error) => {
+				console.error('Error while fetching data:', error);
+			});
+	}, []);
 
 	return (
 		<FullpageContainer
@@ -33,7 +54,7 @@ export default function CoverPage() {
 			transitionDuration={1000} // 섹션 간 전환 속도
 		>
 			<FullpageSection name="first" className="flex">
-				<div style={{ width: '70%' }} className="m-10">
+				<div className="m-10 min-w-[65%] max-w-[65%]">
 					<p className="text-9xl font-semibold text-lime-800">GREEN</p>
 					<Typewriter
 						onInit={(typewriter) => {
@@ -49,21 +70,21 @@ export default function CoverPage() {
 						}}
 					/>
 				</div>
-				<div style={{ width: '30%' }} className="flex-col bg-lime-800">
+				<div className="min-w-[35%] max-w-[35%] flex-col bg-lime-800">
 					<div className="ml-10 mt-10 h-1/2 w-full flex-col text-white">
-						<p className="text-2xl font-semibold">Total Users</p>
+						<p className="text-2xl font-semibold">Total Submitted Codes</p>
 						<CountUp
-							className="text-9xl font-semibold text-white"
-							end={100}
-							duration={5}
+							className="text-8xl font-semibold text-white"
+							end={totalCode}
+							duration={4}
 						></CountUp>
 					</div>
 					<div className="ml-10 h-1/2 w-full flex-col text-white">
 						<p className="text-2xl font-semibold">Total CO2 Reduction</p>
 						<CountUp
-							className="text-9xl font-semibold text-white"
-							end={300}
-							duration={5}
+							className="text-8xl font-semibold text-white"
+							end={totalCO2}
+							duration={4}
 						></CountUp>
 					</div>
 				</div>
@@ -75,14 +96,13 @@ export default function CoverPage() {
 					</p>
 					<div className="flex flex-wrap justify-around">
 						{world
-							.sort((obj1, obj2) => obj2.total_c - obj1.total_c)
+							.sort((obj1, obj2) => obj2.total_reduction - obj1.total_reduction)
+							.slice(0, Math.min(6, world.length))
 							.map((world) => (
-								<div
-									key={world.country}
-									className="m-3 flex h-1/2 w-1/4 flex-col"
-								>
+								<div key={world.name} className="m-3 flex h-1/2 w-1/4 flex-col">
 									<img
-										src={world.imageUrl}
+										src={countryFlag[world.name]}
+										alt={world.name}
 										className="h-full w-full object-cover"
 									></img>
 								</div>
