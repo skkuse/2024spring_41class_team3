@@ -24,6 +24,13 @@ export default function ListPage() {
 		'bg-pink-300',
 		'bg-purple-300',
 	];
+	const algorithm_info = [
+		'An algorithm to prevent function calls within a loop',
+		'An algorithm to avoid nested if statements',
+		'An algorithm to prevent object declarations within a loop',
+		'An algorithm to replace string concatenation with a StringBuilder',
+		'',
+	];
 
 	const [data, setData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -65,13 +72,16 @@ export default function ListPage() {
 							</TabsTrigger>
 						))}
 					</TabsList>
-					<div className=" w-[900px] pt-12">
+					<div className=" w-[900px]">
 						{algorithms.map((algorithm, index) => (
 							<TabsContent
 								key={index}
 								value={algorithm}
 								className="bg-transparent"
 							>
+								<p className="pb-10 pl-5 pt-4 font-bold text-gray-500">
+									- {algorithm_info.at(index)}
+								</p>
 								{isLoading ? (
 									<LoadingTable />
 								) : (

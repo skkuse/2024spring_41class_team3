@@ -1,13 +1,11 @@
 import {
 	Table,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableHead,
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { useEffect } from 'react';
 
 export const DetailTable = ({ data }) => {
 	const runtime =
