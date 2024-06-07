@@ -9,13 +9,16 @@ import './MainPage.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { FaSpinner } from 'react-icons/fa';
+import { useCopyToClipboard } from '@uidotdev/usehooks';
+import { FaClipboard } from 'react-icons/fa';
+import { Toaster, toast } from 'sonner';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function MainPage() {
+	const [copiedText, copyToClipboard] = useCopyToClipboard();
 	const [inputCode, setInputCode] = useState(''); // input code
 	const [outputCode, setOutputCode] = useState(''); // output code
-
 	const [inputflag, setInputFlag] = useState(false);
 	const [inputEmission, setInputEmission] = useState(0.0);
 	const [outputEmission, setOutputEmission] = useState(0.0);
@@ -32,6 +35,14 @@ export default function MainPage() {
 		}
 	};
 
+	const handleOutputCopy = () => {
+		if (outputCode) {
+			copyToClipboard(outputCode);
+			toast.success('Copied to clipboard!');
+		} else {
+			toast.error('No output code to copy!');
+		}
+	};
 	const onSubmitButtonClick = async () => {
 		if (!inputCode.trim()) {
 			Swal.fire('ERROR', 'Input your code.', 'error');
@@ -136,9 +147,10 @@ export default function MainPage() {
 	return (
 		<Layout>
 			<div>
+				<Toaster position="top-center" richColors duration={1000} closeButton />
 				<div className="flex flex-col gap-40">
 					<div className="flex h-96 justify-center gap-10 px-20">
-						<div className="flex flex-col gap-3">
+						<div className="mt-3 flex flex-col gap-3">
 							<h1 className="text-xl font-bold text-lime-800">INPUT</h1>
 							<CodeEditor
 								value={inputCode}
@@ -161,7 +173,12 @@ export default function MainPage() {
 							</div>
 						</div>
 						<div className="flex flex-col gap-3">
-							<h1 className="text-xl font-bold text-lime-800">OUTPUT</h1>
+							<div className="flex items-center justify-between">
+								<h1 className="text-xl font-bold text-lime-800">OUTPUT</h1>
+								<Button variant="ghost" onClick={handleOutputCopy}>
+									<FaClipboard className="size-5 text-lime-800" />
+								</Button>
+							</div>
 							<CodeEditor value={outputCode} readOnly />
 						</div>
 					</div>

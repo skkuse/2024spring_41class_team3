@@ -11,6 +11,9 @@ export default function CodeEditor({ value, onChange, readOnly = false }) {
 				width="650px"
 				extensions={[java()]}
 				readOnly={readOnly}
+				basicSetup={{
+					highlightActiveLine: false,
+				}}
 			/>
 		</div>
 	);

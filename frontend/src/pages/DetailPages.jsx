@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Toaster, toast } from 'sonner';
 import { useCopyToClipboard } from '@uidotdev/usehooks';
 import axios from 'axios';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserSection from '@/components/UserSection';
 import { DetailTable } from '@/components/Detailtable';
 
