@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Toaster, toast } from 'sonner';
 import { useCopyToClipboard } from '@uidotdev/usehooks';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import UserSection from '@/components/UserSection';
+import { DetailTable } from '@/components/Detailtable';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -15,6 +16,7 @@ export default function DetailPages() {
 	const [copiedText, copyToClipboard] = useCopyToClipboard();
 	const [beforeCode, setBeforeCode] = useState('');
 	const [afterCode, setAfterCode] = useState('');
+	const [data, setData] = useState([]);
 	const [user, setUser] = useState('');
 	const handleInputCopy = () => {
 		copyToClipboard(beforeCode);
@@ -25,7 +27,7 @@ export default function DetailPages() {
 		toast.success('Copied to clipboard!');
 	};
 	const { id } = useParams();
-	
+
 	useEffect(() => {
 		axios
 			.get(`${BASE_URL}/detail/${id}`)
@@ -33,6 +35,7 @@ export default function DetailPages() {
 				setBeforeCode(res.data.before_code);
 				setAfterCode(res.data.after_code);
 				setUser(res.data.github_id);
+				setData(res.data);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -64,14 +67,9 @@ export default function DetailPages() {
 						<CodeEditor value={afterCode} readOnly />
 					</div>
 				</div>
-				<div className="flex justify-between">
-					<div>
-						<h2>실행 서버 정보</h2>
-					</div>
-					<div>
-						<h2>감소량 시각화</h2>
-					</div>
+				<div className="flex items-center justify-between">
 					<UserSection user={user} />
+					<DetailTable data={data} />
 				</div>
 			</div>
 		</Layout>
