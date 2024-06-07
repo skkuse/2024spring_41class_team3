@@ -28,7 +28,7 @@ export const columns = [
 	{
 		accessorKey: 'energy_needed',
 		header: 'Needed Energy',
-		cell: ({ row }) => `${row.original.energy_needed.toFixed(2)} kWh`,
+		cell: ({ row }) => `${row.original.energy_needed.toFixed(3)} kWh`,
 	},
 	{
 		accessorKey: 'date',
