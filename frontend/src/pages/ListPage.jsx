@@ -124,7 +124,7 @@ export default function ListPage() {
 										onClick={(e) => e.preventDefault()}
 									/>
 								)}
-								<div className="relative flex gap-3">
+								<div className="relative flex gap-3 text-gray-500">
 									<div className="flex items-center space-x-2">
 										<RadioGroupItem value="newest" id="newest" />
 										<Label htmlFor="newest">Newest</Label>
