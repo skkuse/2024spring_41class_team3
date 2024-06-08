@@ -21,22 +21,6 @@ class CodeResponse(BaseModel):
     algorithm_types: List[int]
     change_lines: List[int]
 
-def convert_code(codes: List[Code]):
-    return [CodeResponse(id=code.code_id, 
-            runtime=code.runtime,
-            memory=code.memory,
-            before_code=code.before_code,
-            after_code=code.after_code,
-            before_carbon=code.before_carbon,
-            after_carbon=code.after_carbon,
-            github_id=code.github_id,
-            date=code.date,
-            energy_needed=code.energy_needed,
-            stdout=code.stdout,
-            sharing=code.sharing,
-            country_id=code.country_id
-            ) for code in codes]
-
 #country
 class CountryResponse(BaseModel):
     id: int
@@ -53,8 +37,8 @@ def convert_country(countries: List[Country]):
 class DefaultResponse(BaseModel):
     daily_visitor: int
     total_visitor: int
-    total_reduction: float
-    countries: List[CountryResponse]
+    total_reduction: Optional[float]
+    countries: Optional[List[CountryResponse]]
 
 # /api/code request/response
 class CodeRequest(BaseModel):

@@ -53,8 +53,11 @@ Response 200
 @app.get("/api/default")
 def cover(db: Session = Depends(get_db)):
     total_visitor, daily_visitor = get_visitor(db, date.today())
+    print(total_visitor, daily_visitor)
     total_reduction, countries = get_country(db)
+    print(total_reduction, countries)
     response_countries = convert_country(countries)
+    print(response_countries)
     
     return DefaultResponse(
         daily_visitor=daily_visitor,
@@ -205,9 +208,26 @@ Response 200
     }
 }
 """
+def convert_code(db: Session, codes: List[Code]):
+    return [CodeResponse(id=code.code_id, 
+            runtime=code.runtime,
+            memory=code.memory,
+            before_code=code.before_code,
+            after_code=code.after_code,
+            before_carbon=code.before_carbon,
+            after_carbon=code.after_carbon,
+            github_id=code.github_id,
+            date=code.date,
+            energy_needed=code.energy_needed,
+            stdout=code.stdout,
+            sharing=code.sharing,
+            country_id=code.country_id,
+            algorithm_types=get_mappings(db, code.code_id),
+            change_lines=get_imappings(db, code.code_id)) for code in codes]
+    
 @app.get("/api/bulletin/{algorithm_type}")
 def bulletin(algorithm_type: int, db: Session = Depends(get_db)):
-    return BulletinResponse(codes=convert_code([mapping.code for mapping in get_mapping(db, algorithm_type) if mapping.code.sharing]))
+    return BulletinResponse(codes=convert_code(db, [mapping.code for mapping in get_mapping(db, algorithm_type) if mapping.code.sharing]))
 
 """
 Request
