@@ -1,0 +1,106 @@
+export const countryFlag = {
+	Argentina:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/1280px-Flag_of_Argentina.svg.png',
+	Australia:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Australia.svg/1280px-Flag_of_Australia.svg.png',
+	Austria:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/1280px-Flag_of_Austria.svg.png',
+	Belgium:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_Belgium_%28civil%29.svg/1280px-Flag_of_Belgium_%28civil%29.svg.png',
+	Brazil:
+		'https://upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/1280px-Flag_of_Brazil.svg.png',
+	Bulgaria:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Bulgaria.svg/1280px-Flag_of_Bulgaria.svg.png',
+	Canada:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Canada_%28Pantone%29.svg/1280px-Flag_of_Canada_%28Pantone%29.svg.png',
+	China:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png',
+	Croatia:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Flag_of_Croatia.svg/1280px-Flag_of_Croatia.svg.png',
+	Cyprus:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/1280px-Flag_of_Cyprus.svg.png',
+	'Czech Republic':
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_Czech_Republic.svg/1280px-Flag_of_the_Czech_Republic.svg.png',
+	Denmark:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Flag_of_Denmark.svg/1280px-Flag_of_Denmark.svg.png',
+	Estonia:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Flag_of_Estonia.svg/1280px-Flag_of_Estonia.svg.png',
+	Finland:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Finland.svg/1280px-Flag_of_Finland.svg.png',
+	France:
+		'https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/1280px-Flag_of_France.svg.png',
+	Germany:
+		'https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/1280px-Flag_of_Germany.svg.png',
+	Greece:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Greece.svg/1280px-Flag_of_Greece.svg.png',
+	Hungary:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Flag_of_Hungary.svg/1280px-Flag_of_Hungary.svg.png',
+	Iceland:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Iceland.svg/1280px-Flag_of_Iceland.svg.png',
+	India:
+		'https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1280px-Flag_of_India.svg.png',
+	Indonesia:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/1280px-Flag_of_Indonesia.svg.png',
+	Ireland:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Flag_of_Ireland.svg/1280px-Flag_of_Ireland.svg.png',
+	Israel:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Israel.svg/1280px-Flag_of_Israel.svg.png',
+	Italy:
+		'https://upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/1280px-Flag_of_Italy.svg.png',
+	Japan:
+		'https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png',
+	Korea:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png',
+	Latvia:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Flag_of_Latvia.svg/1280px-Flag_of_Latvia.svg.png',
+	Lithuania:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Lithuania.svg/1280px-Flag_of_Lithuania.svg.png',
+	Luxembourg:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Flag_of_Luxembourg.svg/1280px-Flag_of_Luxembourg.svg.png',
+	Malta:
+		'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flag_of_Malta.svg/1280px-Flag_of_Malta.svg.png',
+	Mexico:
+		'https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_Mexico.svg',
+	Netherlands:
+		'https://upload.wikimedia.org/wikipedia/commons/2/20/Flag_of_the_Netherlands.svg',
+	'New Zealand':
+		'https://upload.wikimedia.org/wikipedia/commons/3/3e/Flag_of_New_Zealand.svg',
+	Norway:
+		'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Norway.svg',
+	Poland:
+		'https://upload.wikimedia.org/wikipedia/commons/1/12/Flag_of_Poland.svg',
+	Portugal:
+		'https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Portugal.svg',
+	Romania:
+		'https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Romania.svg',
+	'Russian Federation':
+		'https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg',
+	'Saudi Arabia':
+		'https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg',
+	Serbia:
+		'https://upload.wikimedia.org/wikipedia/commons/f/ff/Flag_of_Serbia.svg',
+	Singapore:
+		'https://upload.wikimedia.org/wikipedia/commons/4/48/Flag_of_Singapore.svg',
+	Slovakia:
+		'https://upload.wikimedia.org/wikipedia/commons/e/e6/Flag_of_Slovakia.svg',
+	Slovenia:
+		'https://upload.wikimedia.org/wikipedia/commons/f/f0/Flag_of_Slovenia.svg',
+	'South Africa':
+		'https://upload.wikimedia.org/wikipedia/commons/a/af/Flag_of_South_Africa.svg',
+	Spain:
+		'https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg',
+	Sweden:
+		'https://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Sweden.svg',
+	Switzerland:
+		'https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Switzerland.svg',
+	Thailand:
+		'https://upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Thailand.svg',
+	Turkey:
+		'https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg',
+	'United Arab Emirates':
+		'https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_United_Arab_Emirates.svg',
+	'United Kingdom':
+		'https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg',
+	'United States of America':
+		'https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg',
+};
