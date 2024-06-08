@@ -9,6 +9,11 @@ from db.crud import *
 
 from logics.excute_java import *
 from logics.check_carbon import *
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from starlette.requests import Request
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -30,9 +35,15 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/")
-def test(db: Session = Depends(get_db)):
-    return {"today": "hello"}
+# React 빌드 결과물을 정적 파일로 서빙
+app.mount("/static", StaticFiles(directory="frontend/build/static"), name="static")
+
+# 템플릿 디렉토리 설정
+templates = Jinja2Templates(directory="frontend/build")
+
+@app.get("/", response_class=HTMLResponse)
+async def serve_spa(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 """
 Response 200
