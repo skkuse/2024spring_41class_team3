@@ -10,6 +10,9 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { FaSpinner } from 'react-icons/fa';
+import { useCopyToClipboard } from '@uidotdev/usehooks';
+import { FaClipboard } from 'react-icons/fa';
+import { Toaster, toast } from 'sonner';
 import {
 	Select,
 	SelectContent,
@@ -22,6 +25,7 @@ import { countryFlag } from '@/components/countryFlag';
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function MainPage() {
+	const [copiedText, copyToClipboard] = useCopyToClipboard();
 	const [inputCode, setInputCode] = useState(''); // input code
 	const [outputCode, setOutputCode] = useState(''); // output code
 	const [selectedCountry, setSelectedCountry] = useState(null); // selected country
@@ -42,21 +46,21 @@ export default function MainPage() {
 		}
 	};
 
+	const handleOutputCopy = () => {
+		if (outputCode) {
+			copyToClipboard(outputCode);
+			toast.success('Copied to clipboard!');
+		} else {
+			toast.error('No output code to copy!');
+		}
+	};
 	const onSubmitButtonClick = async () => {
 		if (!inputCode.trim()) {
 			Swal.fire('ERROR', 'Input your code.', 'error');
 			return;
 		}
-
-		if (!selectedCountry) {
-			Swal.fire('ERROR', 'Select your country.', 'error');
-			return;
-		}
-
 		setLoading(true);
-
 		const submitButton = document.getElementById('submitBtn');
-
 		if (submitButton) {
 			submitButton.disabled = true;
 		}
@@ -64,13 +68,13 @@ export default function MainPage() {
 		axios
 			.post(`${BASE_URL}/code`, {
 				code: inputCode,
-				country: selectedCountry,
+				country: 'Korea', //TODO: FIX with dropdown
 			})
 			.then(async (res) => {
 				setOutputCode(res.data.after_code);
 				setInputEmission(res.data.before_carbon.toFixed(1));
 				setOutputEmission(res.data.after_carbon.toFixed(1));
-				setSubmitCount(submitCount + 1);
+				setSubmitCount((prev) => prev + 1);
 
 				const { value: makePublic } = await Swal.fire({
 					title: 'PUBLISH CODE IN BULLETIN',
@@ -168,21 +172,21 @@ export default function MainPage() {
 	return (
 		<Layout>
 			<div>
+				<Toaster position="top-center" richColors duration={1000} closeButton />
 				<div className="flex flex-col gap-40">
 					<div className="flex h-96 justify-center gap-10 px-20">
-						<div className="flex flex-col gap-3">
-							<div>
-								<div className="flex items-center justify-between">
-									<h1 className="text-xl font-bold text-lime-800">INPUT</h1>
-									<Button variant="ghost" onClick={deleteCode}>
-										<FaRegTrashAlt className="size-5 text-lime-800" />
-									</Button>
-								</div>
-								<CodeEditor
-									value={inputCode}
-									onChange={(value) => setInputCode(value)}
-								/>
+						<div className="flex flex-col gap-2">
+							<div className="flex items-center justify-between">
+								<h1 className="text-xl font-bold text-lime-800">INPUT</h1>
+								<Button variant="ghost" onClick={deleteCode}>
+									<FaRegTrashAlt className="size-5 text-lime-800" />
+								</Button>
 							</div>
+							<CodeEditor
+								value={inputCode}
+								onChange={(value) => setInputCode(value)}
+							/>
+
 							<div className="flex">
 								<div className="flex-1" />
 								<Select onValueChange={(value) => setSelectedCountry(value)}>
@@ -205,8 +209,13 @@ export default function MainPage() {
 								</Button>
 							</div>
 						</div>
-						<div className="flex flex-col gap-3">
-							<h1 className="text-xl font-bold text-lime-800">OUTPUT</h1>
+						<div className="flex flex-col gap-2">
+							<div className="flex items-center justify-between">
+								<h1 className="text-xl font-bold text-lime-800">OUTPUT</h1>
+								<Button variant="ghost" onClick={handleOutputCopy}>
+									<FaClipboard className="size-5 text-lime-800" />
+								</Button>
+							</div>
 							<CodeEditor value={outputCode} readOnly />
 						</div>
 					</div>

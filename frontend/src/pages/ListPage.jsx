@@ -98,8 +98,8 @@ export default function ListPage() {
 						))}
 					</TabsList>
 					<div className="flex w-[900px] flex-col justify-between pt-12">
-						<div className="flex items-center gap-3">
-							<p>
+						<div className="flex items-center gap-3 pb-5">
+							<p className="font-bold text-gray-500 ">
 								{algorithmType === 1 &&
 									'Algorithm to prevents function call within loop'}
 								{algorithmType === 2 &&
@@ -124,7 +124,7 @@ export default function ListPage() {
 										onClick={(e) => e.preventDefault()}
 									/>
 								)}
-								<div className="relative flex gap-3">
+								<div className="relative flex gap-3 text-gray-500">
 									<div className="flex items-center space-x-2">
 										<RadioGroupItem value="newest" id="newest" />
 										<Label htmlFor="newest">Newest</Label>
