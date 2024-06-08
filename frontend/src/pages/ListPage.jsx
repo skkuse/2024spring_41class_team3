@@ -28,20 +28,15 @@ export default function ListPage() {
 		'bg-pink-300',
 		'bg-purple-300',
 	];
-	const algorithm_info = [
-		'An algorithm to prevent function calls within a loop',
-		'An algorithm to avoid nested if statements',
-		'An algorithm to prevent object declarations within a loop',
-		'An algorithm to replace string concatenation with a StringBuilder',
-		'',
-	];
 
+	const [algorithmType, setAlgorithmType] = useState(1);
 	const [radioValue, setRadioValue] = useState('newest');
 	const [data, setData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	const getData = (type) => {
 		setIsLoading(true);
+		setAlgorithmType(type);
 		axios.get(`${BASE_URL}/bulletin/${type}`).then((res) => {
 			setData(res.data.codes.sort((a, b) => b.id - a.id));
 			setIsLoading(false);
@@ -103,7 +98,18 @@ export default function ListPage() {
 						))}
 					</TabsList>
 					<div className="flex w-[900px] flex-col justify-between pt-12">
-						<div className="flex items-center gap-3">
+						<div className="flex items-center gap-3 pb-5">
+							<p className="font-bold text-gray-500 ">
+								{algorithmType === 1 &&
+									'Algorithm to prevents function call within loop'}
+								{algorithmType === 2 &&
+									'Algorithm to block nested if-statements'}
+								{algorithmType === 3 &&
+									'Algorithm to prevent object declaration within loop'}
+								{algorithmType === 4 &&
+									'Algorithm to convert String concatenation with a StringBuilder'}
+								{algorithmType === 5 && ''}
+							</p>
 							<FaFilter className="ml-auto size-5 text-lime-800" />
 							<RadioGroup
 								className="flex"
@@ -145,9 +151,6 @@ export default function ListPage() {
 								value={algorithm}
 								className="bg-transparent"
 							>
-								<p className="relative bottom-8 pb-2 pl-5 text-lg font-bold text-gray-500">
-									- {algorithm_info.at(index)}
-								</p>
 								{isLoading ? (
 									<LoadingTable />
 								) : (
