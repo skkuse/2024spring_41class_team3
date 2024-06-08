@@ -56,9 +56,32 @@ def update_country(db: Session, country: Country, carbon: float):
 def get_mapping(db: Session, algoritm_type: int):
     return db.query(Mapping).filter(Mapping.algorithm_id == algoritm_type).all()
 
+def get_mappings(db: Session, code_id: int):
+    mappings = db.query(Mapping).filter(Mapping.code_id == code_id).all()
+    algorithm_types = []
+    for mapping in mappings:
+        algorithm_types.append(mapping.algorithm_id)
+    return algorithm_types
+
 def add_mapping(db: Session, code_id: int, algorithm_types: List[int]):
     for algorithm_type in algorithm_types:
         item = Mapping(code_id=code_id, algorithm_id=algorithm_type)
+        db.add(item)
+        db.commit()
+        db.refresh(item)
+    return
+
+#imapping
+def get_imappings(db: Session, code_id: int):
+    imappings = db.query(Imapping).filter(Imapping.code_id == code_id).all()
+    change_lines = []
+    for imapping in imappings:
+        change_lines.append(imapping.line)
+    return change_lines
+    
+def add_imapping(db: Session, code_id: int, change_lines: List[int]):
+    for change_line in change_lines:
+        item = Imapping(code_id=code_id, line=change_line)
         db.add(item)
         db.commit()
         db.refresh(item)

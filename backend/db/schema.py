@@ -18,6 +18,8 @@ class CodeResponse(BaseModel):
     stdout: str
     sharing: bool
     country_id: int
+    algorithm_types: List[int]
+    change_lines: List[int]
 
 def convert_code(codes: List[Code]):
     return [CodeResponse(id=code.code_id, 
@@ -40,7 +42,7 @@ class CountryResponse(BaseModel):
     id: int
     name: str
     total_reduction: float
-    
+
 def convert_country(countries: List[Country]):
     return [CountryResponse(id=country.country_id, name=country.name, total_reduction=country.total_reduction) for country in countries]
 

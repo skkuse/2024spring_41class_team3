@@ -22,8 +22,7 @@ class Code(Base):
     
     # 역참조
     mappings = relationship("Mapping", back_populates="code")
-    # imappings = relationship("Imapping", back_populates="code")
-    # Omappings = relationship("Omapping", back_populates="code")
+    imappings = relationship("Imapping", back_populates="code")
     
 class Mapping(Base):
     __tablename__ = "mapping"
@@ -35,26 +34,16 @@ class Mapping(Base):
     # 참조
     code = relationship("Code", back_populates="mappings")
     
-# class Imapping(Base):
-#     __tablename__ = "Imapping"
+class Imapping(Base):
+    __tablename__ = "Imapping"
     
-#     imapping_id = Column(Integer, primary_key=True)
-#     code_id = Column(Integer, ForeignKey('code.code_id'))
-#     line = Column(Integer)
+    imapping_id = Column(Integer, primary_key=True)
+    code_id = Column(Integer, ForeignKey('code.code_id'))
+    line = Column(Integer)
     
-#     # 참조
-#     code = relationship("Code", back_populates="imappings")
+    # 참조
+    code = relationship("Code", back_populates="imappings")
 
-# class Omapping(Base):
-#     __tablename__ = "Imapping"
-    
-#     imapping_id = Column(Integer, primary_key=True)
-#     code_id = Column(Integer, ForeignKey('code.code_id'))
-#     line = Column(Integer)
-    
-#     # 참조
-#     code = relationship("Code", back_populates="omappings")
-    
 class Country(Base):
     __tablename__ = "country"
     

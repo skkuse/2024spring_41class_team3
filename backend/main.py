@@ -151,6 +151,10 @@ def code(request: CodeRequest, db: Session = Depends(get_db)):
             
             # mapping 저장
             add_mapping(db, code.code_id, algorithm_types)
+            
+            # imapping 저장
+            add_imapping(db, code.code_id, change_lines)
+            
             # country 저장
             update_country(db, country, (code.before_carbon - code.after_carbon))
             
@@ -234,7 +238,7 @@ Response 200
 }
 """
 @app.get("/api/detail/{code_id}")
-def detail(code_id: int, db: Session = Depends(get_db)):
+def detail(code_id: int,  db: Session = Depends(get_db)):
     code = get_code_by_id(db, code_id)
     if code:
         return CodeResponse(id=code.code_id,
@@ -249,4 +253,6 @@ def detail(code_id: int, db: Session = Depends(get_db)):
                             energy_needed=code.energy_needed,
                             stdout=code.stdout,
                             sharing=code.sharing,
-                            country_id=code.country_id)
+                            country_id=code.country_id,
+                            algorithm_types=get_mappings(db, code.code_id),
+                            change_lines=get_imappings(db, code.code_id))
