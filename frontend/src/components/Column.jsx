@@ -7,7 +7,7 @@ export const columns = [
 	},
 	{
 		accessorKey: 'github_id',
-		header: 'user name',
+		header: 'User name',
 		cell: ({ row }) =>
 			row.original.github_id ? (
 				<GithubCard children={row.original.github_id} />
@@ -17,13 +17,23 @@ export const columns = [
 	},
 	{
 		accessorKey: 'before_carbon',
-		header: 'before carbon emission',
+		header: 'Before CO2',
 		cell: ({ row }) => `${row.original.before_carbon.toFixed(2)} g`,
 	},
 	{
 		accessorKey: 'after_carbon',
-		header: 'after carbon emission',
+		header: 'After CO2',
 		cell: ({ row }) => `${row.original.after_carbon.toFixed(2)} g`,
+	},
+	{
+		accessorKey: 'runtime',
+		header: 'Runtime',
+		cell: ({ row }) => `${row.original.runtime.toFixed(3)} s`,
+	},
+	{
+		accessorKey: 'memory',
+		header: 'Memory',
+		cell: ({ row }) => `${row.original.memory} GB`,
 	},
 	{
 		accessorKey: 'energy_needed',

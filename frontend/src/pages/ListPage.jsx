@@ -145,7 +145,7 @@ export default function ListPage() {
 								value={algorithm}
 								className="bg-transparent"
 							>
-								<p className="pb-10 pl-5 pt-4 font-bold text-gray-500">
+								<p className="relative bottom-8 pb-2 pl-5 text-lg font-bold text-gray-500">
 									- {algorithm_info.at(index)}
 								</p>
 								{isLoading ? (

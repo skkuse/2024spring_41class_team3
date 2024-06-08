@@ -38,7 +38,7 @@ export const DetailTable = ({ data }) => {
 					<TableBody>
 						<TableRow>
 							<TableCell className="font-medium">{runtime}s</TableCell>
-							<TableCell className="text-right">{memory}</TableCell>
+							<TableCell className="text-right">{memory}GB</TableCell>
 							<TableCell className="text-right">{beforeCarbon}g</TableCell>
 							<TableCell className="text-right">{afterCarbon}g</TableCell>
 							<TableCell className="text-right">{energyNeeded}KWh</TableCell>
