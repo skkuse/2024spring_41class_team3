@@ -8,10 +8,19 @@ import { useState } from 'react';
 import './MainPage.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { FaRegTrashAlt } from 'react-icons/fa';
 import { FaSpinner } from 'react-icons/fa';
 import { useCopyToClipboard } from '@uidotdev/usehooks';
 import { FaClipboard } from 'react-icons/fa';
 import { Toaster, toast } from 'sonner';
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select';
+import { countryFlag } from '@/components/countryFlag';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -19,10 +28,12 @@ export default function MainPage() {
 	const [copiedText, copyToClipboard] = useCopyToClipboard();
 	const [inputCode, setInputCode] = useState(''); // input code
 	const [outputCode, setOutputCode] = useState(''); // output code
+	const [selectedCountry, setSelectedCountry] = useState(null); // selected country
 	const [inputflag, setInputFlag] = useState(false);
 	const [inputEmission, setInputEmission] = useState(0.0);
 	const [outputEmission, setOutputEmission] = useState(0.0);
 	const [loading, setLoading] = useState(false); // State to manage loading indicator
+	const [submitCount, setSubmitCount] = useState(0);
 
 	const verifyGitHubUsername = async (username) => {
 		try {
@@ -48,7 +59,6 @@ export default function MainPage() {
 			Swal.fire('ERROR', 'Input your code.', 'error');
 			return;
 		}
-
 		setLoading(true);
 		const submitButton = document.getElementById('submitBtn');
 		if (submitButton) {
@@ -64,6 +74,7 @@ export default function MainPage() {
 				setOutputCode(res.data.after_code);
 				setInputEmission(res.data.before_carbon.toFixed(1));
 				setOutputEmission(res.data.after_carbon.toFixed(1));
+				setSubmitCount((prev) => prev + 1);
 
 				const { value: makePublic } = await Swal.fire({
 					title: 'PUBLISH CODE IN BULLETIN',
@@ -144,24 +155,50 @@ export default function MainPage() {
 			});
 	};
 
+	const countryObject = Object.entries(countryFlag);
+
+	const countryOptions = countryObject.map(([country, img]) => (
+		<SelectItem key={country} value={country} className="flex items-center">
+			<img src={img} alt={country} className="mr-5 inline-block h-5 w-5"></img>
+			<span className="inline-block">{country}</span>
+		</SelectItem>
+	));
+
+	const deleteCode = () => {
+		setInputCode('');
+		setOutputCode('');
+	};
+
 	return (
 		<Layout>
 			<div>
 				<Toaster position="top-center" richColors duration={1000} closeButton />
 				<div className="flex flex-col gap-40">
 					<div className="flex h-96 justify-center gap-10 px-20">
-						<div className="mt-3 flex flex-col gap-3">
-							<h1 className="text-xl font-bold text-lime-800">INPUT</h1>
+						<div className="flex flex-col gap-2">
+							<div className="flex items-center justify-between">
+								<h1 className="text-xl font-bold text-lime-800">INPUT</h1>
+								<Button variant="ghost" onClick={deleteCode}>
+									<FaRegTrashAlt className="size-5 text-lime-800" />
+								</Button>
+							</div>
 							<CodeEditor
 								value={inputCode}
 								onChange={(value) => setInputCode(value)}
 							/>
+
 							<div className="flex">
 								<div className="flex-1" />
+								<Select onValueChange={(value) => setSelectedCountry(value)}>
+									<SelectTrigger>
+										<SelectValue placeholder="Select your country" />
+										<SelectContent>{countryOptions}</SelectContent>
+									</SelectTrigger>
+								</Select>
 								<Button
 									id="submitBtn"
 									onClick={onSubmitButtonClick}
-									className="bg-lime-500 hover:bg-lime-600"
+									className="ml-5 bg-lime-500 hover:bg-lime-600"
 									disabled={loading} // Disable button when loading
 								>
 									{loading ? (
@@ -172,7 +209,7 @@ export default function MainPage() {
 								</Button>
 							</div>
 						</div>
-						<div className="flex flex-col gap-3">
+						<div className="flex flex-col gap-2">
 							<div className="flex items-center justify-between">
 								<h1 className="text-xl font-bold text-lime-800">OUTPUT</h1>
 								<Button variant="ghost" onClick={handleOutputCopy}>
@@ -189,7 +226,7 @@ export default function MainPage() {
 							inputEmission={inputEmission}
 							outputEmission={outputEmission}
 						/>
-						<World_ranking />
+						<World_ranking submitCount={submitCount} />
 					</div>
 				</div>
 			</div>
