@@ -36,10 +36,10 @@ def get_db():
         db.close()
 
 # React 빌드 결과물을 정적 파일로 서빙
-app.mount("/static", StaticFiles(directory="frontend/build/static"), name="static")
+app.mount("/static", StaticFiles(directory="../frontend/build/static"), name="static")
 
 # 템플릿 디렉토리 설정
-templates = Jinja2Templates(directory="frontend/build")
+templates = Jinja2Templates(directory="../frontend/build")
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_spa(request: Request):
