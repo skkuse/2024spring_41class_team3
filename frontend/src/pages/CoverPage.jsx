@@ -95,18 +95,24 @@ export default function CoverPage() {
 						Participating Countries
 					</p>
 					<div className="flex flex-wrap justify-around">
-						{world
-							.sort((obj1, obj2) => obj2.total_reduction - obj1.total_reduction)
-							.slice(0, Math.min(6, world.length))
-							.map((world) => (
-								<div key={world.name} className="m-3 flex h-1/2 w-1/4 flex-col">
-									<img
-										src={countryFlag[world.name]}
-										alt={world.name}
-										className="h-full w-full object-cover"
-									></img>
-								</div>
-							))}
+						{typeof world !== 'undefined' &&
+							world
+								.sort(
+									(obj1, obj2) => obj2.total_reduction - obj1.total_reduction,
+								)
+								.slice(0, Math.min(6, world.length))
+								.map((world) => (
+									<div
+										key={world.name}
+										className="m-3 flex h-1/2 w-1/4 flex-col"
+									>
+										<img
+											src={countryFlag[world.name]}
+											alt={world.name}
+											className="h-full w-full object-cover"
+										></img>
+									</div>
+								))}
 					</div>
 				</div>
 			</FullpageSection>

@@ -38,8 +38,10 @@ export default function ListPage() {
 		setIsLoading(true);
 		setAlgorithmType(type);
 		axios.get(`${BASE_URL}/bulletin/${type}`).then((res) => {
-			setData(res.data.codes.sort((a, b) => b.id - a.id));
-			setIsLoading(false);
+			if (typeof res.data.codes !== 'undefined') {
+				setData(res.data.codes.sort((a, b) => b.id - a.id));
+				setIsLoading(false);
+			}
 		});
 	};
 

@@ -30,35 +30,36 @@ const World_ranking = ({ submitCount }) => {
 		<div className="mr-10 w-96">
 			<b>TOP Carbon Saving COUNTRY</b> / Carbon(g)
 			<ul className="divide-y divide-gray-200">
-				{world
-					.sort((obj1, obj2) => obj2.total_reduction - obj1.total_reduction)
-					.slice(0, Math.min(6, world.length))
-					.map((world) => {
-						return (
-							<li
-								key={world.name}
-								className="flex justify-between gap-x-6 py-5"
-							>
-								<div className="flex min-w-0 gap-x-4">
-									<img
-										className="h-12 w-12 flex-none rounded-full bg-gray-50"
-										src={countryFlag[world.name]}
-										alt=""
-									/>
-									<div className="min-w-0 flex-auto">
-										<p className="text-sm font-semibold leading-6 text-gray-900">
-											{world.name}
+				{typeof world !== 'undefined' &&
+					world
+						.sort((obj1, obj2) => obj2.total_reduction - obj1.total_reduction)
+						.slice(0, Math.min(6, world.length))
+						.map((world) => {
+							return (
+								<li
+									key={world.name}
+									className="flex justify-between gap-x-6 py-5"
+								>
+									<div className="flex min-w-0 gap-x-4">
+										<img
+											className="h-12 w-12 flex-none rounded-full bg-gray-50"
+											src={countryFlag[world.name]}
+											alt=""
+										/>
+										<div className="min-w-0 flex-auto">
+											<p className="text-sm font-semibold leading-6 text-gray-900">
+												{world.name}
+											</p>
+										</div>
+									</div>
+									<div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+										<p className="text-sm leading-6 text-gray-900">
+											{world.total_reduction.toFixed(4)}
 										</p>
 									</div>
-								</div>
-								<div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-									<p className="text-sm leading-6 text-gray-900">
-										{world.total_reduction.toFixed(4)}
-									</p>
-								</div>
-							</li>
-						);
-					})}
+								</li>
+							);
+						})}
 			</ul>
 		</div>
 	);
