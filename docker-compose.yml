@@ -8,7 +8,7 @@ services:
     volumes:
       - ./frontend/build:/app/build
     ports:
-      - "3000:80" # 프론트엔드 서비스는 3000 포트에서 접근 가능
+      - "3000:80" 
 
   backend:
     build:
@@ -17,6 +17,6 @@ services:
     volumes:
       - ./frontend/build:/app/static
     ports:
-      - "8000:80" # 백엔드 서비스는 8000 포트에서 접근 가능
+      - "8000:80" 
     depends_on:
       - frontend
