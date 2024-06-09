@@ -76,8 +76,8 @@ export default function ListPage() {
 
 	return (
 		<Layout>
-			<div className="w-[1000px]">
-				<Tabs defaultValue={algorithms[0]} className="w-[400px]">
+			<div className="flex max-w-full justify-center">
+				<Tabs defaultValue={algorithms[0]}>
 					<TabsList className="bg-transparent">
 						{algorithms.map((algorithm, index) => (
 							<TabsTrigger
@@ -99,7 +99,7 @@ export default function ListPage() {
 							</TabsTrigger>
 						))}
 					</TabsList>
-					<div className="flex w-[900px] flex-col justify-between pt-12">
+					<div className="flex w-[1000px] flex-col justify-between pt-12">
 						<div className="flex items-center gap-3 pb-5">
 							<p className="font-bold text-gray-500 ">
 								{algorithmType === 1 &&

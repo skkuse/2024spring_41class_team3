@@ -48,16 +48,16 @@ export default function DetailPages() {
 			<div className="flex flex-col">
 				<div className="text-[48px] font-extrabold text-lime-800"># {id}</div>
 				<div className="flex h-[500px] justify-between gap-20">
-					<div>
+					<div className="w-full">
 						<div className="flex items-center justify-between">
 							<h1 className="text-xl font-bold text-lime-800">INPUT</h1>
 							<Button variant="ghost" onClick={handleInputCopy}>
 								<FaClipboard className="size-5 text-lime-800" />
 							</Button>
 						</div>
-						<CodeEditor value={beforeCode} readOnly />
+						<CodeEditor value={beforeCode} readOnly className="w-full" />
 					</div>
-					<div>
+					<div className="w-full">
 						<div className="flex items-center justify-between">
 							<h1 className="text-lg font-bold text-lime-800">OUTPUT</h1>
 							<Button variant="ghost" onClick={handleOutputCopy}>

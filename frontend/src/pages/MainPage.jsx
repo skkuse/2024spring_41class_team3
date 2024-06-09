@@ -171,11 +171,11 @@ export default function MainPage() {
 
 	return (
 		<Layout>
-			<div>
+			<>
 				<Toaster position="top-center" richColors duration={1000} closeButton />
 				<div className="flex flex-col gap-40">
-					<div className="flex h-96 justify-center gap-10 px-20">
-						<div className="flex flex-col gap-2">
+					<div className="flex h-96 w-full justify-center gap-10">
+						<div className="flex w-1/2 flex-col gap-2">
 							<div className="flex items-center justify-between">
 								<h1 className="text-xl font-bold text-lime-800">INPUT</h1>
 								<Button variant="ghost" onClick={deleteCode}>
@@ -209,7 +209,7 @@ export default function MainPage() {
 								</Button>
 							</div>
 						</div>
-						<div className="flex flex-col gap-2">
+						<div className="flex w-1/2 flex-col gap-2">
 							<div className="flex items-center justify-between">
 								<h1 className="text-xl font-bold text-lime-800">OUTPUT</h1>
 								<Button variant="ghost" onClick={handleOutputCopy}>
@@ -219,7 +219,7 @@ export default function MainPage() {
 							<CodeEditor value={outputCode} readOnly />
 						</div>
 					</div>
-					<div className="flex h-[800px] justify-between gap-5">
+					<div className="flex h-[800px] w-full justify-between gap-5">
 						<Server_info />
 						<Visualize_c
 							inputflag={inputflag}
@@ -229,7 +229,7 @@ export default function MainPage() {
 						<World_ranking submitCount={submitCount} />
 					</div>
 				</div>
-			</div>
+			</>
 		</Layout>
 	);
 }

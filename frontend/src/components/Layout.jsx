@@ -6,9 +6,7 @@ import Footer from './Footer';
 const Layout = ({ children }) => (
 	<div>
 		<Header />
-		<div className="w-dvh flex min-h-dvh justify-center px-16 py-8">
-			{children}
-		</div>
+		<div className="min-h-dvh w-dvw px-16 py-8">{children}</div>
 		<Footer />
 	</div>
 );

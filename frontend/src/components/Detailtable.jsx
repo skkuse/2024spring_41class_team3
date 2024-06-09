@@ -25,7 +25,7 @@ export const DetailTable = ({ data }) => {
 	return (
 		data && (
 			<div>
-				<Table className="w-[660px border-2 border-lime-800/20">
+				<Table className="border-2 border-lime-800/20">
 					<TableHeader>
 						<TableRow>
 							<TableHead>runtime</TableHead>

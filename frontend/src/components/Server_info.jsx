@@ -1,6 +1,6 @@
 const Server_info = () => {
 	return (
-		<div className="w-96 pl-16">
+		<div className="w-72">
 			<h3 className="text-base font-semibold leading-7 text-gray-900">
 				Server info.
 			</h3>

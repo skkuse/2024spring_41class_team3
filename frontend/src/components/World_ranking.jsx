@@ -27,7 +27,7 @@ const World_ranking = ({ submitCount }) => {
 	}, [submitCount]);
 
 	return (
-		<div className="mr-10 w-96">
+		<div className="w-72">
 			<b>TOP Carbon Saving COUNTRY</b> / Carbon(g)
 			<ul className="divide-y divide-gray-200">
 				{typeof world !== 'undefined' &&
