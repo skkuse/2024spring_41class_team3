@@ -110,7 +110,8 @@ export default function ListPage() {
 									'Algorithm to prevent object declaration within loop'}
 								{algorithmType === 4 &&
 									'Algorithm to convert String concatenation with a StringBuilder'}
-								{algorithmType === 5 && ''}
+								{algorithmType === 5 &&
+									'Convert IO operations using FileWriter / File Reader to use BufferedWriter / BufferedReader'}
 							</p>
 							<FaFilter className="ml-auto size-5 text-lime-800" />
 							<RadioGroup

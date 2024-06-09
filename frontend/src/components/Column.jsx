@@ -12,7 +12,7 @@ export const columns = [
 			row.original.github_id ? (
 				<GithubCard children={row.original.github_id} />
 			) : (
-				'Anonymous'
+				<div className="text-gray-400">Anonymous</div>
 			),
 	},
 	{
