@@ -9,6 +9,7 @@ import re
 
 current_location = os.path.dirname(__file__)
 num_of_alg = 5
+NS = 1000000000
 old_name = ""
 def replace_class_name(java_code):
     # 클래스 이름을 추출하고 변경하는 정규표현식
@@ -169,7 +170,7 @@ def excute_java_code(file: str):
         return [False, execute_process.stderr.decode("utf-8"), 0]
     
 
-    runtime = int(execute_process.stdout.decode().split("\n")[-1])
+    runtime = int(execute_process.stdout.decode().split("\n")[-1]) / NS
     print("Java execution output: ",[True, execute_process.stdout.decode("utf-8"), runtime,0])
     # 실행 결과 출력
     #print("Java execution output:", execute_process.stdout.decode("utf-8"))
