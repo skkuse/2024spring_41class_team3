@@ -1,17 +1,16 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.Random;
 
 public class Temp {
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
 
-        ArrayList<String> arr = new ArrayList<>();
-        for(int i = 0 ; i < 100000; i++)
-            arr.add("Hello");
-        for(int i=0; i<arr.size(); i++) {
-            arr.get(i);
+        
+        for(int i=0; i<100000; i++) {
+            Random r = new Random();
+            int num = r.nextInt(10);
+
         }
-            long endTime = System.currentTimeMillis();
+            long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         System.out.println();
         System.out.print(duration);

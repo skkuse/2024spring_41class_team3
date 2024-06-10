@@ -43,7 +43,7 @@ def add_timing_to_main(java_code):
     if match:
         start_index = match.end()
         timing_code = (
-            '\n        long startTime = System.currentTimeMillis();\n'  # 시작 시간 측정
+            '\n        long startTime = System.nanoTime();\n'  # 시작 시간 측정
         )
         
         # main 메서드의 끝을 찾기 위한 중괄호 짝 맞추기
@@ -57,7 +57,7 @@ def add_timing_to_main(java_code):
             end_index += 1
         
         end_timing_code = (
-            '        long endTime = System.currentTimeMillis();\n'
+            '        long endTime = System.nanoTime();\n'
             '        long duration = (endTime - startTime);\n'
             '        System.out.println();\n'
             '        System.out.print(duration);\n'
@@ -70,12 +70,12 @@ def add_timing_to_main(java_code):
 def remove_timing_code(code):
     # 시작 시간 측정 코드 패턴
     start_timing_pattern = (
-        r'\s*long startTime = System\.currentTimeMillis\(\);\n'
+        r'\s*long startTime = System\.nanoTime\(\);\n'
     )
 
     # 종료 시간 측정 코드 패턴
     end_timing_pattern = (
-        r'\s*long endTime = System\.currentTimeMillis\(\);\n'
+        r'\s*long endTime = System\.nanoTime\(\);\n'
         r'\s*long duration = \(endTime - startTime\);\n'
         r'\s*System.out.println\(\);\n'
         r'\s*System.out.print\(duration\);'
@@ -107,9 +107,15 @@ def Str_to_file(code: str):
     return
 
 def changed_lines(temp_code, fixed_code):
+    temp_code = remove_timing_code(temp_code).split("\n")
+    fixed_code = remove_timing_code(fixed_code).split("\n")
     changed_lines = []
+    #print(temp_code)
+    #print(fixed_code)
     for i,line in enumerate(fixed_code):
         if line not in temp_code:
+            if 'public class' in line:
+                continue
             changed_lines.append(i+1)
     
     return changed_lines
@@ -140,13 +146,11 @@ def modify_java_code():
     if detection :
         target_file = os.path.join(current_location, "Temp.java")
         f = open(target_file)
-        print(f.read())
-        temp_code = f.read().split("\n")
+        temp_code = f.read()
         f.close()
         f = open(fixed_file)
-        fixed_code = f.read().split("\n")
+        fixed_code = f.read()
         f.close()
-
         change_lines = changed_lines(temp_code,fixed_code)
         
     return algorithm_types, change_lines

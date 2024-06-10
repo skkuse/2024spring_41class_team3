@@ -1,18 +1,17 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.Random;
 
 public class Fixed {
-    public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
 
-        ArrayList<String> arr = new ArrayList<>();
-        for(int i = 0 ; i < 100000; i++)
-            arr.add("Hello");
-        int arrSize = arr.size();
-        for(int i=0; i<arrSize; i++) {
-            arr.get(i);
+    public static void main(String[] args) {
+        long startTime = System.nanoTime();
+
+        
+            Random r = new Random();
+        for(int i=0; i<100000; i++) {
+            int num = r.nextInt(10);
+
         }
-            long endTime = System.currentTimeMillis();
+            long endTime = System.nanoTime();
         long duration = (endTime - startTime);
         System.out.println();
         System.out.print(duration);
