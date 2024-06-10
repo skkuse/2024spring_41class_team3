@@ -23,7 +23,9 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:80",
-    "http://yourdomain.com",
+    "http://localhost:3000",  # 로컬 개발용
+    "http://107.21.73.97:3000",  # EC2 인스턴스 퍼블릭 IP
+
     # 필요한 경우 더 많은 도메인을 추가
 ]
 
