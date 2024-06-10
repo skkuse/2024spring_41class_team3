@@ -21,6 +21,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { countryFlag } from '@/components/countryFlag';
+import ChangedCodeEditor from '@/components/ChangedCodeEditor';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -34,6 +35,7 @@ export default function MainPage() {
 	const [outputEmission, setOutputEmission] = useState(0.0);
 	const [loading, setLoading] = useState(false); // State to manage loading indicator
 	const [submitCount, setSubmitCount] = useState(0);
+	const [change_lines, setChangeLines] = useState([])
 
 	const verifyGitHubUsername = async (username) => {
 		try {
@@ -75,6 +77,7 @@ export default function MainPage() {
 				setInputEmission(res.data.before_carbon.toFixed(1));
 				setOutputEmission(res.data.after_carbon.toFixed(1));
 				setSubmitCount((prev) => prev + 1);
+				setChangeLines(res.data.change_lines);
 
 				const { value: makePublic } = await Swal.fire({
 					title: 'PUBLISH CODE IN BULLETIN',
@@ -216,7 +219,7 @@ export default function MainPage() {
 									<FaClipboard className="size-5 text-lime-800" />
 								</Button>
 							</div>
-							<CodeEditor value={outputCode} readOnly />
+							<ChangedCodeEditor afterCode={outputCode} changedLines={change_lines} />
 						</div>
 					</div>
 					<div className="flex h-[800px] w-full justify-between gap-5">

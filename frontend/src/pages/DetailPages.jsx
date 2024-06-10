@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import UserSection from '@/components/UserSection';
 import { DetailTable } from '@/components/Detailtable';
+import ChangedCodeEditor from '@/components/ChangedCodeEditor';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -56,6 +57,7 @@ export default function DetailPages() {
 							</Button>
 						</div>
 						<CodeEditor value={beforeCode} readOnly className="w-full" />
+						
 					</div>
 					<div className="w-full">
 						<div className="flex items-center justify-between">
@@ -64,13 +66,14 @@ export default function DetailPages() {
 								<FaClipboard className="size-5 text-lime-800" />
 							</Button>
 						</div>
-						<CodeEditor value={afterCode} readOnly />
+						<ChangedCodeEditor beforeCode={beforeCode} afterCode={afterCode} changedLines={data.change_lines} />
 					</div>
 				</div>
 				<div className="mb-10 flex items-center justify-between">
 					<UserSection user={user} />
 					<DetailTable data={data} />
 				</div>
+				
 			</div>
 		</Layout>
 	);
