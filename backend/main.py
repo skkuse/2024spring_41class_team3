@@ -19,6 +19,14 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+# CORS 설정
+origins = [
+    "http://localhost",
+    "http://localhost:80",
+    "http://yourdomain.com",
+    # 필요한 경우 더 많은 도메인을 추가
+]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
