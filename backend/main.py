@@ -27,6 +27,8 @@ origins = [
     "http://107.21.73.97:3000",  # EC2 인스턴스 퍼블릭 IP
     "http://yuljeoni.com/",
     "http://www.yuljeoni.com/",
+    "https://yuljeoni.com",
+    "https://www.yuljeoni.com"
 
     # 필요한 경우 더 많은 도메인을 추가
 ]
