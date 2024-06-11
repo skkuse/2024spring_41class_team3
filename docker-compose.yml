@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./frontend/build:/usr/share/nginx/html
-    expose:
-      - "80"
+    ports:
+      - "3001:80" # 프론트엔드 컨테이너의 포트를 3001로 변경
 
   backend:
     build:
@@ -16,8 +16,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./frontend/build:/app/static
-    expose:
-      - "80"
+    ports:
+      - "8000:80"
     depends_on:
       - frontend
 
