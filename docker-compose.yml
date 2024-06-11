@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./frontend/build:/usr/share/nginx/html
-    ports:
-      - "3000:80"
+    expose:
+      - "80"
 
   backend:
     build:
@@ -16,8 +16,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./frontend/build:/app/static
-    ports:
-      - "8000:80"
+    expose:
+      - "80"
     depends_on:
       - frontend
 
