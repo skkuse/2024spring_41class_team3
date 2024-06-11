@@ -9,10 +9,27 @@ from db.crud import *
 
 from logics.excute_java import *
 from logics.check_carbon import *
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from starlette.requests import Request
+
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+# CORS 설정
+origins = [
+    "http://localhost",
+    "http://localhost:80",
+    "http://localhost:3000",  # 로컬 개발용
+    "http://107.21.73.97:3000",  # EC2 인스턴스 퍼블릭 IP
+    "http://yuljeoni.com/",
+    "http://www.yuljeoni.com/",
+
+    # 필요한 경우 더 많은 도메인을 추가
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -30,9 +47,15 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/")
-def test(db: Session = Depends(get_db)):
-    return {"today": "hello"}
+# React 빌드 결과물을 정적 파일로 서빙
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# 템플릿 디렉토리 설정
+templates = Jinja2Templates(directory="static/index.html")
+
+@app.get("/", response_class=HTMLResponse)
+async def serve_spa(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 """
 Response 200

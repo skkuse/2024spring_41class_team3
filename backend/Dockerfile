@@ -13,11 +13,15 @@ WORKDIR /app
 # Copy the requirements file into the container
 COPY requirements.txt .
 
+
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the working directory contents into the container
 COPY . .
+
+# Copy the build files from frontend
+#COPY ../frontend/build ./static
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
