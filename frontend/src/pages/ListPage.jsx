@@ -103,15 +103,15 @@ export default function ListPage() {
 						<div className="flex items-center gap-3 pb-5">
 							<p className="font-bold text-gray-500 ">
 								{algorithmType === 1 &&
-									'Algorithm to prevents function call within loop'}
+									'Algorithm to block function call within loop'}
 								{algorithmType === 2 &&
 									'Algorithm to block nested if-statements'}
 								{algorithmType === 3 &&
-									'Algorithm to prevent object declaration within loop'}
+									'Algorithm to block object declaration within loop'}
 								{algorithmType === 4 &&
-									'Algorithm to convert String concatenation with a StringBuilder'}
+									'Algorithm to convert String concatenation to StringBuilder'}
 								{algorithmType === 5 &&
-									'Convert IO operations using FileWriter / File Reader to use BufferedWriter / BufferedReader'}
+									'Algorithm to convert FileWriter & FileReader to BufferedWriter & BufferedReader'}
 							</p>
 							<FaFilter className="ml-auto size-5 text-lime-800" />
 							<RadioGroup

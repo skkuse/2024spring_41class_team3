@@ -6,7 +6,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import '@shinyongjun/react-fullpage/css';
 import Typewriter from 'typewriter-effect';
-import './CoverPage.css';
 import CountUp from 'react-countup';
 import { countryFlag } from '@/components/countryFlag';
 import axios from 'axios';
@@ -67,6 +66,7 @@ export default function CoverPage() {
 						options={{
 							loop: true,
 							wrapperClassName: 'text-9xl font-semibold text-lime-800',
+							cursorClassName: 'text-9xl font-semibold text-lime-800',
 						}}
 					/>
 				</div>

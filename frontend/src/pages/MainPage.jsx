@@ -30,12 +30,12 @@ export default function MainPage() {
 	const [inputCode, setInputCode] = useState(''); // input code
 	const [outputCode, setOutputCode] = useState(''); // output code
 	const [selectedCountry, setSelectedCountry] = useState(null); // selected country
-	const [inputflag, setInputFlag] = useState(false);
+	const [inputFlag, setInputFlag] = useState(false);
 	const [inputEmission, setInputEmission] = useState(0.0);
 	const [outputEmission, setOutputEmission] = useState(0.0);
 	const [loading, setLoading] = useState(false); // State to manage loading indicator
 	const [submitCount, setSubmitCount] = useState(0);
-	const [change_lines, setChangeLines] = useState([])
+	const [change_lines, setChangeLines] = useState([]);
 
 	const verifyGitHubUsername = async (username) => {
 		try {
@@ -61,8 +61,16 @@ export default function MainPage() {
 			Swal.fire('ERROR', 'Input your code.', 'error');
 			return;
 		}
+
+		if (!selectedCountry) {
+			Swal.fire('ERROR', 'Select your country.', 'error');
+			return;
+		}
+
 		setLoading(true);
+
 		const submitButton = document.getElementById('submitBtn');
+
 		if (submitButton) {
 			submitButton.disabled = true;
 		}
@@ -70,7 +78,7 @@ export default function MainPage() {
 		axios
 			.post(`${BASE_URL}/code`, {
 				code: inputCode,
-				country: 'Korea', //TODO: FIX with dropdown
+				country: selectedCountry,
 			})
 			.then(async (res) => {
 				setOutputCode(res.data.after_code);
@@ -194,7 +202,10 @@ export default function MainPage() {
 								<div className="flex-1" />
 								<Select onValueChange={(value) => setSelectedCountry(value)}>
 									<SelectTrigger>
-										<SelectValue placeholder="Select your country" />
+										<SelectValue
+											placeholder="Select your country"
+											className="text-gray-500"
+										/>
 										<SelectContent>{countryOptions}</SelectContent>
 									</SelectTrigger>
 								</Select>
@@ -219,13 +230,16 @@ export default function MainPage() {
 									<FaClipboard className="size-5 text-lime-800" />
 								</Button>
 							</div>
-							<ChangedCodeEditor afterCode={outputCode} changedLines={change_lines} />
+							<ChangedCodeEditor
+								afterCode={outputCode}
+								changedLines={change_lines}
+							/>
 						</div>
 					</div>
 					<div className="flex h-[800px] w-full justify-between gap-5">
 						<Server_info />
 						<Visualize_c
-							inputflag={inputflag}
+							inputFlag={inputFlag}
 							inputEmission={inputEmission}
 							outputEmission={outputEmission}
 						/>
