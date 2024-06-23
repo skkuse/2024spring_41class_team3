@@ -30,11 +30,9 @@ GREEN CO2DING 서비스는 전 세계 개발자들의 코드 탄소 배출량 �
 ![](https://velog.velcdn.com/images/youznn/post/1cc411bd-b414-42bd-a67e-53cbf5f841a3/image.png)
 
 
+
 ## Contributers
 2024 SPRING SKKU SE CLASS 41 TEAM 3
-
-
-## Contributors
 
 ### Frontend
 <table>
@@ -89,6 +87,7 @@ GREEN CO2DING 서비스는 전 세계 개발자들의 코드 탄소 배출량 �
     </td>
   </tr>
 </table>
+
 
 
 
